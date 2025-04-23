@@ -1,3 +1,5 @@
+export const runtime = 'nodejs'
+
 import { sendEmail } from '../../../lib/sendEmail.js'
 
 export async function POST(req) {
