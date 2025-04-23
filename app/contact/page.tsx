@@ -8,7 +8,7 @@ import { Input } from "../../components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { MapPin, Phone, Mail, Clock, CheckCircle, Instagram, Facebook } from "lucide-react"
-import { useLanguage } from "../../context/language-context"
+import { useLanguage } from "../../../context/language-context"
 
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -16,6 +16,8 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log("🟡 Formulario enviado...")
+
     const formData = new FormData(e.target)
 
     const data = {
@@ -25,22 +27,28 @@ export default function Contact() {
       message: formData.get("message"),
     }
 
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
 
-    if (response.ok) {
-      setFormSubmitted(true)
-      setTimeout(() => {
-        setFormSubmitted(false)
-        e.target.reset()
-      }, 3000)
-    } else {
-      console.error("Fallo al enviar el mensaje")
+      console.log("🔵 Respuesta del backend:", response)
+
+      if (response.ok) {
+        setFormSubmitted(true)
+        setTimeout(() => {
+          setFormSubmitted(false)
+          e.target.reset()
+        }, 3000)
+      } else {
+        console.error("❌ Error en respuesta del servidor:", await response.text())
+      }
+    } catch (err) {
+      console.error("❌ Error en el fetch:", err)
     }
   }
 
