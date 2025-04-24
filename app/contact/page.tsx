@@ -8,7 +8,7 @@ import { Input } from "../../components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { MapPin, Phone, Mail, Clock, CheckCircle, Instagram, Facebook } from "lucide-react"
-import { useLanguage } from "../../../context/language-context"
+import { useLanguage } from "../../context/language-context"
 
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -29,8 +29,7 @@ export default function Contact() {
 
     try {
       const response = await fetch(`${window.location.origin}/api/contact`, {
-
-        method: "POST",
+       method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
