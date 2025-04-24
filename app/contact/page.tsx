@@ -9,6 +9,7 @@ import { Textarea } from "../../components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { MapPin, Phone, Mail, Clock, CheckCircle, Instagram, Facebook } from "lucide-react"
 import { useLanguage } from "../../context/language-context"
+import { sendEmail } from '@/lib/sendEmail'
 
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -16,7 +17,6 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("🟡 Formulario enviado...")
 
     const formData = new FormData(e.target)
 
@@ -27,6 +27,8 @@ export default function Contact() {
       message: formData.get("message"),
     }
 
+    await sendEmail(data)
+    
     try {
       const response = await fetch(`${window.location.origin}/api/contact`, {
        method: "POST",
