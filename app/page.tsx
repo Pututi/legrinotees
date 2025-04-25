@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button"
 import SplitVignette from "@/components/split-vignette"
 import SplitImageAnimation from "@/components/split-image-animation"
 import OptimizedImage from "@/components/optimized-image"
+import { ContactForm } from '@/components/ContactForm'
+
 // import { VideoPlayer } from "@/components/ui/video-player"
 
 // Definir interfaces para los props de los componentes

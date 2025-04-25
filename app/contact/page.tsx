@@ -10,25 +10,28 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { MapPin, Phone, Mail, Clock, CheckCircle, Instagram, Facebook } from "lucide-react"
 import { useLanguage } from "../../context/language-context"
 import { sendEmail } from '@/lib/sendEmail'
+import type { EmailData } from "@/lib/sendEmail";
+
 
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const { t, language } = useLanguage()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+   e.preventDefault()
 
-    const formData = new FormData(e.target)
+   const form = e.target as HTMLFormElement
+   const formData = new FormData(form)
+   
 
-    const data = {
+    const data: EmailData = {
       name: `${formData.get("firstName")} ${formData.get("lastName")}`,
-      email: formData.get("email"),
-      subject: formData.get("subject"),
-      message: formData.get("message"),
-    }
-
-    await sendEmail(data)
+      email: String(formData.get("email")),
+      subject: String(formData.get("subject")),
+      message: String(formData.get("message")),
+    };
     
+
     try {
       const response = await fetch(`${window.location.origin}/api/contact`, {
        method: "POST",
@@ -44,7 +47,8 @@ export default function Contact() {
         setFormSubmitted(true)
         setTimeout(() => {
           setFormSubmitted(false)
-          e.target.reset()
+          ;(e.target as HTMLFormElement).reset()
+
         }, 3000)
       } else {
         console.error("❌ Error en respuesta del servidor:", await response.text())
@@ -151,7 +155,14 @@ export default function Contact() {
   )
 }
 
-function ContactInfo({ icon, title, content }) {
+type ContactInfoProps = {
+  icon: React.ReactNode;
+  title: string;
+  content: string;
+}
+
+function ContactInfo({ icon, title, content }: ContactInfoProps) {
+
   return (
     <div className="flex items-start">
       <div className="flex-shrink-0 mr-4 mt-1 text-gray-600">{icon}</div>
