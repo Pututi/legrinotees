@@ -1,5 +1,7 @@
 import { Resend } from "resend"
 
+const resend = new Resend(process.env.RESEND_API_KEY)
+
 export interface EmailData {
   name: string
   email: string
@@ -7,68 +9,41 @@ export interface EmailData {
   message: string
 }
 
-const resendApiKey = process.env.RESEND_API_KEY
-const resend = new Resend(resendApiKey)
-
-export async function sendEmail(data: EmailData) {
+export async function sendContactFormEmail(data: EmailData): Promise<boolean> {
   const { name, email, subject, message } = data
 
-  // ✉️ 1. Correo a tu empresa (Legrinotees)
-  const emailToAdmin = await resend.emails.send({
-    from: 'Legrinotees <info@legrinotees.com>',
-    to: ['info@legrinotees.com'],
-    subject: `[Contacto Web] ${subject}`,
-    text: `
+  try {
+    const { data: resendData, error } = await resend.emails.send({
+      from: "Legrinotees <info@legrinotees.com>",
+      to: ["info@legrinotees.com"],
+      subject: `[Contacto] ${subject}`,
+      text: `
 Nombre: ${name}
 Email: ${email}
+Asunto: ${subject}
+
 Mensaje:
 ${message}
-    `.trim(),
-    html: `
-      <h2>Nuevo Mensaje de Contacto</h2>
-      <p><strong>Nombre:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Asunto:</strong> ${subject}</p>
-      <p><strong>Mensaje:</strong></p>
-      <p>${message.replace(/\n/g, "<br>")}</p>
-    `.trim(),
-  })
+      `.trim(),
+      html: `
+        <h2>Nuevo mensaje de contacto</h2>
+        <p><strong>Nombre:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Asunto:</strong> ${subject}</p>
+        <h3>Mensaje:</h3>
+        <p>${message.replace(/\n/g, "<br>")}</p>
+      `,
+    })
 
-  // ✉️ 2. Auto-Respuesta al cliente
-  const autoResponse = await resend.emails.send({
-    from: 'Legrinotees <info@legrinotees.com>',
-    to: [email],
-    subject: '¡Hemos recibido tu mensaje en Legrinotees!',
-    text: `
-Hola ${name},
+    if (error) {
+      console.error("❌ Error enviando email con Resend:", error)
+      return false
+    }
 
-Gracias por tu mensaje.
-
-Nuestro equipo lo ha recibido y te responderá pronto.
-
-Si tienes dudas urgentes puedes llamarnos al +49 17621649886.
-
-¡Gracias por confiar en nosotros!
-
-El equipo de Legrinotees
-    `.trim(),
-    html: `
-      <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-        <h2 style="color: #4CAF50;">¡Hola ${name}!</h2>
-        <p>Gracias por tu mensaje. 😊</p>
-        <p>Queremos confirmarte que hemos recibido tu solicitud y te responderemos pronto.</p>
-        <hr />
-        <p><strong>Teléfono:</strong> +49 17621649886</p>
-        <p><strong>Email:</strong> info@legrinotees.com</p>
-        <br/>
-        <p>Un cordial saludo,</p>
-        <p><strong>Legrinotees Team</strong></p>
-      </div>
-    `.trim(),
-  })
-
-  return {
-    adminResult: emailToAdmin,
-    customerResult: autoResponse,
+    console.log("✅ Email enviado correctamente:", resendData)
+    return true
+  } catch (err) {
+    console.error("❌ Error inesperado en sendContactFormEmail:", err)
+    return false
   }
 }

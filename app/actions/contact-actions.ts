@@ -14,7 +14,7 @@ const contactFormSchema = z.object({
 
 export async function submitContactForm(formData: FormData) {
   try {
-    // Extraer datos del formulario
+    // Extraer los datos del formulario
     const rawData = {
       firstName: formData.get("firstName") as string,
       lastName: formData.get("lastName") as string,
@@ -23,38 +23,36 @@ export async function submitContactForm(formData: FormData) {
       message: formData.get("message") as string,
     }
 
-    // Validar datos
+    // Validar los datos
     const validationResult = contactFormSchema.safeParse(rawData)
 
     if (!validationResult.success) {
-      console.error("Validation error:", validationResult.error.format())
+      console.error("Validation Error:", validationResult.error.format())
       return {
         success: false,
-        message: "Error de validación. Por favor verifica los campos del formulario.",
+        message: "Por favor revisa que todos los campos estén correctamente completados.",
       }
     }
 
-    // Enviar email
-    console.log("Enviando email con datos:", validationResult.data)
+    // Enviar el email
     const emailSent = await sendContactFormEmail(validationResult.data)
 
     if (!emailSent) {
-      console.error("Failed to send email")
       return {
         success: false,
-        message: "Hubo un error al enviar el formulario. Por favor intenta de nuevo más tarde.",
+        message: "Hubo un error al enviar el email. Intenta nuevamente más tarde.",
       }
     }
 
     return {
       success: true,
-      message: "¡Gracias! Tu mensaje ha sido enviado correctamente.",
+      message: "¡Tu mensaje ha sido enviado exitosamente!",
     }
   } catch (error) {
-    console.error("Error in submitContactForm:", error)
+    console.error("submitContactForm error:", error)
     return {
       success: false,
-      message: "Hubo un error al procesar tu solicitud. Por favor intenta de nuevo más tarde.",
+      message: "Ocurrió un error inesperado. Por favor intenta de nuevo.",
     }
   }
 }
