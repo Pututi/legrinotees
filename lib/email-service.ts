@@ -27,7 +27,7 @@ export async function sendEmail(data: EmailData): Promise<boolean> {
 
     // Enviar el correo electrónico usando Resend
     const { data: resendData, error } = await resend.emails.send({
-      from: from: data.from, // 
+      from: data.from, // 
       to: recipient,
       subject: data.subject,
       text: data.text,
