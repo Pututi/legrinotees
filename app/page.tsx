@@ -228,7 +228,7 @@ export default function Home() {
         leftImage="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207241/rabbito.png"
         rightImage="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207240/master2.png"
         leftText="Urban"
-        rightText="Colorful"
+        rightText="Casual"
       />
 
       {/* Split image animation */}
