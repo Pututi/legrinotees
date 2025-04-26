@@ -13,7 +13,7 @@ const resendApiKey = process.env.RESEND_API_KEY
 const resend = new Resend(resendApiKey)
 
 // Email de prueba (tu propio email)
-const TEST_EMAIL = "gustavopc@icloud.com"
+const TEST_EMAIL = "info@legrinotees.com"
 // Determinar si estamos en modo de producción o desarrollo
 const isProduction = true
 
