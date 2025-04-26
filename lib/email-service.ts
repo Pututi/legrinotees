@@ -82,7 +82,8 @@ export async function sendContactFormEmail(formData: {
 
   try {
     // En producción, esto debería ser tu dominio verificado
-    const fromEmail = "onboarding@resend.dev"
+    const fromEmail = "info@legrinotees.com"
+
 
     // El destinatario real (se usará en producción)
     const toEmail = "info@legrinotees.com"
