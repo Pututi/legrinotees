@@ -50,6 +50,30 @@ const translations = {
       details: "Settings",
       signOut: "Sign Out",
     },
+    contact: {
+      title: "Get in Touch",
+      subtitle:
+        "We'd love to hear from you. Whether you have a question about our products, need help with an order, or want to collaborate, we're here to help.",
+      formTitle: "Send us a message",
+      formDescription: "Fill out the form below and we'll get back to you as soon as possible.",
+      firstName: "First Name",
+      lastName: "Last Name",
+      email: "Email",
+      subject: "Subject",
+      message: "Message",
+      send: "Send Message",
+      sending: "Sending...",
+      messageSent: "Message Sent!",
+      thankYou: "Thank you for reaching out. We'll get back to you shortly.",
+      contactInfo: "Contact Information",
+      contactDescription: "Here's how you can reach us directly.",
+      address: "Address",
+      phone: "Phone",
+      businessHours: "Business Hours",
+      followUs: "Follow Us",
+      stayConnected: "Stay connected with us on social media.",
+      otherWays: "Other Ways to Contact Us",
+    },
     account: {
       title: "My Account",
       welcomeBack: "Welcome back",
@@ -536,6 +560,31 @@ const translations = {
       wishlist: "Wunschliste",
       details: "Einstellungen",
       signOut: "Abmelden",
+    },
+    contact: {
+      title: "Kontaktieren Sie uns",
+      subtitle:
+        "Wir würden gerne von Ihnen hören. Ob Sie eine Frage zu unseren Produkten haben, Hilfe bei einer Bestellung benötigen oder zusammenarbeiten möchten, wir sind hier, um zu helfen.",
+      formTitle: "Senden Sie uns eine Nachricht",
+      formDescription:
+        "Füllen Sie das untenstehende Formular aus und wir werden uns so schnell wie möglich bei Ihnen melden.",
+      firstName: "Vorname",
+      lastName: "Nachname",
+      email: "E-Mail",
+      subject: "Betreff",
+      message: "Nachricht",
+      send: "Nachricht senden",
+      sending: "Wird gesendet...",
+      messageSent: "Nachricht gesendet!",
+      thankYou: "Vielen Dank für Ihre Kontaktaufnahme. Wir werden uns in Kürze bei Ihnen melden.",
+      contactInfo: "Kontaktinformationen",
+      contactDescription: "Hier erfahren Sie, wie Sie uns direkt erreichen können.",
+      address: "Adresse",
+      phone: "Telefon",
+      businessHours: "Geschäftszeiten",
+      followUs: "Folgen Sie uns",
+      stayConnected: "Bleiben Sie mit uns über soziale Medien in Verbindung.",
+      otherWays: "Andere Kontaktmöglichkeiten",
     },
     account: {
       title: "Mein Konto",
@@ -1025,6 +1074,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         value = value[k]
       } else {
         // Si no se encuentra la clave, devolver la clave como fallback
+        console.warn(`Translation key not found: ${key}`)
         return key
       }
     }

@@ -1,174 +1,207 @@
-// Contact/page.tsx
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Button } from "../../components/ui/button"
-import { Input } from "../../components/ui/input"
-import { Textarea } from "../../components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
-import { MapPin, Phone, Mail, Clock, CheckCircle, Instagram, Facebook } from "lucide-react"
-import { useLanguage } from "../../context/language-context"
-import { sendEmail } from '@/lib/sendEmail'
-import type { EmailData } from "@/lib/sendEmail";
+import type React from "react"
 
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react"
+import { useLanguage } from "@/context/language-context"
+import { useToast } from "@/hooks/use-toast"
+import { submitContactForm } from "../actions/contact-actions"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export default function Contact() {
-  const [formSubmitted, setFormSubmitted] = useState(false)
   const { t, language } = useLanguage()
+  const { toast } = useToast()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formStatus, setFormStatus] = useState<{
+    success?: boolean
+    message?: string
+  }>({})
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-   e.preventDefault()
-
-   const form = e.target as HTMLFormElement
-   const formData = new FormData(form)
-   
-
-    const data: EmailData = {
-      name: `${formData.get("firstName")} ${formData.get("lastName")}`,
-      email: String(formData.get("email")),
-      subject: String(formData.get("subject")),
-      message: String(formData.get("message")),
-    };
-    
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setIsSubmitting(true)
+    setFormStatus({})
 
     try {
-      const response = await fetch(`${window.location.origin}/api/contact`, {
-       method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
+      const formData = new FormData(event.currentTarget)
+      const result = await submitContactForm(formData)
 
-      console.log("🔵 Respuesta del backend:", response)
+      setFormStatus(result)
 
-      if (response.ok) {
-        setFormSubmitted(true)
-        setTimeout(() => {
-          setFormSubmitted(false)
-          ;(e.target as HTMLFormElement).reset()
-
-        }, 3000)
+      if (result.success) {
+        toast({
+          title: "¡Éxito!",
+          description: result.message,
+          variant: "default",
+        })
+        // Limpiar el formulario si fue exitoso
+        ;(event.target as HTMLFormElement).reset()
       } else {
-        console.error("❌ Error en respuesta del servidor:", await response.text())
+        toast({
+          title: "Error",
+          description: result.message,
+          variant: "destructive",
+        })
       }
-    } catch (err) {
-      console.error("❌ Error en el fetch:", err)
+    } catch (error) {
+      console.error("Error submitting form:", error)
+      setFormStatus({
+        success: false,
+        message: "Hubo un error inesperado. Por favor intenta de nuevo más tarde.",
+      })
+      toast({
+        title: "Error",
+        description: "Hubo un error inesperado. Por favor intenta de nuevo más tarde.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
-  const translations = {
-    en: {
-      title: "Get in Touch",
-      subtitle:
-        "We'd love to hear from you. Whether you have a question about our products, need help with an order, or want to collaborate, we're here to help.",
-      sendMessage: "Send us a message",
-      formDescription: "Fill out the form below and we'll get back to you as soon as possible.",
-      firstName: "First Name",
-      lastName: "Last Name",
-      email: "Email",
-      subject: "Subject",
-      message: "Message",
-      sendButton: "Send Message",
-      messageSent: "Message Sent!",
-      thankYou: "Thank you for reaching out. We'll get back to you shortly.",
-      contactInfo: "Contact Information",
-      contactDescription: "Here's how you can reach us directly.",
-      address: "Address",
-      phone: "Phone",
-      businessHours: "Business Hours",
-      followUs: "Follow Us",
-      stayConnected: "Stay connected with us on social media.",
-    },
-    de: {
-      title: "Kontaktieren Sie uns",
-      subtitle:
-        "Wir würden gerne von Ihnen hören. Ob Sie eine Frage zu unseren Produkten haben, Hilfe bei einer Bestellung benötigen oder zusammenarbeiten möchten, wir sind hier, um zu helfen.",
-      sendMessage: "Senden Sie uns eine Nachricht",
-      formDescription:
-        "Füllen Sie das untenstehende Formular aus und wir werden uns so schnell wie möglich bei Ihnen melden.",
-      firstName: "Vorname",
-      lastName: "Nachname",
-      email: "E-Mail",
-      subject: "Betreff",
-      message: "Nachricht",
-      sendButton: "Nachricht senden",
-      messageSent: "Nachricht gesendet!",
-      thankYou: "Vielen Dank für Ihre Kontaktaufnahme. Wir werden uns in Kürze bei Ihnen melden.",
-      contactInfo: "Kontaktinformationen",
-      contactDescription: "Hier erfahren Sie, wie Sie uns direkt erreichen können.",
-      address: "Adresse",
-      phone: "Telefon",
-      businessHours: "Geschäftszeiten",
-      followUs: "Folgen Sie uns",
-      stayConnected: "Bleiben Sie mit uns über soziale Medien in Verbindung.",
-    },
-  }
-
-  const currentTranslations = language === "de" ? translations.de : translations.en
-
-  console.log("✅ Contact component loaded")
-
+  // Mensaje de desarrollo para indicar que los emails se envían a una dirección de prueba
+  const isDevelopment = process.env.NODE_ENV !== "production"
 
   return (
-    <div className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{currentTranslations.title}</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">{currentTranslations.subtitle}</p>
-        </motion.div>
+    <div className="container mx-auto py-12 px-4">
+      <h1 className="text-3xl font-bold mb-8 text-center">
+        {language === "en" ? "Get in Touch" : "Kontaktieren Sie uns"}
+      </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Input id="firstName" name="firstName" placeholder={currentTranslations.firstName} required />
-            <Input id="lastName" name="lastName" placeholder={currentTranslations.lastName} required />
+      <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        {isDevelopment && (
+          <Alert className="mb-6 bg-blue-50 text-blue-800 border border-blue-200">
+            <AlertDescription>
+              <p className="text-sm">
+                <strong>Modo de desarrollo:</strong> Los emails se enviarán a gustavopc@icloud.com en lugar de
+                info@legrinotees.com. Para enviar a otros destinatarios en producción, verifica un dominio en
+                resend.com/domains.
+              </p>
+            </AlertDescription>
+          </Alert>
+        )}
+
+        <h2 className="text-xl font-semibold mb-6">
+          {language === "en" ? "Send us a message" : "Senden Sie uns eine Nachricht"}
+        </h2>
+
+        {formStatus.message && (
+          <div
+            className={`mb-6 p-4 rounded-md border ${
+              formStatus.success
+                ? "bg-green-50 text-green-600 border-green-200"
+                : "bg-red-50 text-red-600 border-red-200"
+            }`}
+          >
+            {formStatus.message}
           </div>
-          <Input id="email" name="email" type="email" placeholder={currentTranslations.email} required />
-          <Input id="subject" name="subject" placeholder={currentTranslations.subject} required />
-          <Textarea id="message" name="message" rows={5} placeholder={currentTranslations.message} required />
+        )}
 
-          <Button type="submit" className="w-full">
-            {currentTranslations.sendButton}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="firstName" className="block text-sm font-medium mb-2">
+                {language === "en" ? "First Name" : "Vorname"}
+              </label>
+              <Input id="firstName" name="firstName" type="text" required className="w-full" />
+            </div>
+
+            <div>
+              <label htmlFor="lastName" className="block text-sm font-medium mb-2">
+                {language === "en" ? "Last Name" : "Nachname"}
+              </label>
+              <Input id="lastName" name="lastName" type="text" required className="w-full" />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-2">
+              {language === "en" ? "Email" : "E-Mail"}
+            </label>
+            <Input id="email" name="email" type="email" required className="w-full" />
+          </div>
+
+          <div>
+            <label htmlFor="subject" className="block text-sm font-medium mb-2">
+              {language === "en" ? "Subject" : "Betreff"}
+            </label>
+            <Input id="subject" name="subject" type="text" required className="w-full" />
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium mb-2">
+              {language === "en" ? "Message" : "Nachricht"}
+            </label>
+            <Textarea id="message" name="message" rows={5} required className="w-full" />
+          </div>
+
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                {language === "en" ? "Sending..." : "Wird gesendet..."}
+              </>
+            ) : language === "en" ? (
+              "Send Message"
+            ) : (
+              "Nachricht senden"
+            )}
           </Button>
-
-          {formSubmitted && (
-            <motion.div
-              className="flex flex-col items-center justify-center py-8"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
-              <h3 className="text-xl font-bold mb-2">{currentTranslations.messageSent}</h3>
-              <p className="text-gray-600 text-center">{currentTranslations.thankYou}</p>
-            </motion.div>
-          )}
         </form>
-      </div>
-    </div>
-  )
-}
 
-type ContactInfoProps = {
-  icon: React.ReactNode;
-  title: string;
-  content: string;
-}
+        <div className="mt-12">
+          <h3 className="text-lg font-semibold mb-4">
+            {language === "en" ? "Other Ways to Contact Us" : "Andere Kontaktmöglichkeiten"}
+          </h3>
 
-function ContactInfo({ icon, title, content }: ContactInfoProps) {
+          <div className="space-y-4">
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mr-4 mt-1 text-gray-600">
+                <Mail className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-medium">{language === "en" ? "Email" : "E-Mail"}</h3>
+                <p className="text-gray-600 mt-1">info@legrinotees.com</p>
+              </div>
+            </div>
 
-  return (
-    <div className="flex items-start">
-      <div className="flex-shrink-0 mr-4 mt-1 text-gray-600">{icon}</div>
-      <div>
-        <h3 className="font-medium">{title}</h3>
-        <p className="text-gray-600 mt-1">{content}</p>
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mr-4 mt-1 text-gray-600">
+                <Phone className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-medium">{language === "en" ? "Phone" : "Telefon"}</h3>
+                <p className="text-gray-600 mt-1">+49 17621649886</p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mr-4 mt-1 text-gray-600">
+                <MapPin className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-medium">{language === "en" ? "Address" : "Adresse"}</h3>
+                <p className="text-gray-600 mt-1">Langenkamp 67, 49082 Osnabrück Deutschland</p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mr-4 mt-1 text-gray-600">
+                <Clock className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-medium">{language === "en" ? "Business Hours" : "Geschäftszeiten"}</h3>
+                <p className="text-gray-600 mt-1">
+                  {language === "en" ? "Monday - Friday: 9am - 6pm EST" : "Montag - Freitag: 9:00 - 18:00 MEZ"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

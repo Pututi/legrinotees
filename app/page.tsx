@@ -1,15 +1,11 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import SplitVignette from "@/components/split-vignette"
 import SplitImageAnimation from "@/components/split-image-animation"
-import OptimizedImage from "@/components/optimized-image"
-import { ContactForm } from '@/components/ContactForm'
-
-// import { VideoPlayer } from "@/components/ui/video-player"
 
 // Definir interfaces para los props de los componentes
 interface ParallaxSectionProps {
@@ -23,8 +19,16 @@ interface AwwwardsButtonProps {
 }
 
 export default function Home() {
+  // Estado para controlar si el componente está montado
+  const [isMounted, setIsMounted] = useState(false)
   const ref = useRef(null)
-  // Evitar desestructuración directa
+
+  // Usar useEffect para actualizar el estado de montaje
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // Solo crear efectos de scroll cuando el componente está montado
   const scrollInfo = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -58,7 +62,6 @@ export default function Home() {
   }
 
   // Actualizar las URLs de Cloudinary para usar imágenes de alta calidad
-  // Reemplazar estas constantes en la parte superior de la función Home
   const cloudinaryHeroUrl = "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210953/BlackWhite.png"
   const cloudinaryElbocosaUrl = "https://res.cloudinary.com/dnic69xtm/image/upload/v1744981665/elsentado2.jpg"
   const cloudinaryAmorososUrl = "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210953/amorosos.jpg"
@@ -66,15 +69,29 @@ export default function Home() {
   // Mock language state for demonstration purposes
   const [language, setLanguage] = useState("en")
 
+  // Si el componente no está montado, devolver null o un placeholder
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
+      </div>
+    )
+  }
+
   return (
     <div className="relative">
       {/* Hero section with parallax background */}
       <div ref={ref} className="relative h-screen overflow-hidden">
         <motion.div className="absolute inset-0 w-full h-full" style={{ scale, opacity }}>
+          {/* Usar la imagen de Cloudinary que funciona */}
           <img
-            src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744210953/BlackWhite.png"
+            src={cloudinaryHeroUrl || "/placeholder.svg"}
             alt="LEGRINO TEES"
             className="w-full h-full object-cover"
+            onError={() => {
+              console.error("Error loading Cloudinary image")
+              setCloudinaryFailed(true)
+            }}
           />
         </motion.div>
         <div className="absolute inset-0 flex items-center justify-center text-center">
@@ -149,11 +166,9 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="overflow-hidden rounded-lg">
-                <OptimizedImage
+                <img
                   src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744210957/lasenatda.png"
                   alt="Minimalist t-shirt"
-                  width={400}
-                  height={500}
                   className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -165,11 +180,9 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="overflow-hidden rounded-lg">
-                <OptimizedImage
+                <img
                   src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744382408/Luxurylife.png"
                   alt="Urban t-shirt"
-                  width={400}
-                  height={500}
                   className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -181,11 +194,9 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="overflow-hidden rounded-lg">
-                <OptimizedImage
+                <img
                   src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744210955/elsentado.png"
                   alt="Colorful t-shirt"
-                  width={400}
-                  height={500}
                   className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -217,7 +228,7 @@ export default function Home() {
         leftImage="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207241/rabbito.png"
         rightImage="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207240/master2.png"
         leftText="Urban"
-        rightText="Casual"
+        rightText="Colorful"
       />
 
       {/* Split image animation */}
@@ -357,7 +368,12 @@ export default function Home() {
 // Modificar la función ParallaxSection para mejorar la calidad de la imagen y corregir el tamaño
 function ParallaxSection({ imageSrc, title, description }: ParallaxSectionProps) {
   const ref = useRef(null)
-  // Evitar desestructuración directa
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   const scrollInfo = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -389,7 +405,12 @@ function ParallaxSection({ imageSrc, title, description }: ParallaxSectionProps)
 // También modificar la función ParallaxZoomSection para mantener la consistencia
 function ParallaxZoomSection({ imageSrc, title, description }: ParallaxSectionProps) {
   const containerRef = useRef(null)
-  // Evitar desestructuración directa
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   const scrollInfo = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
