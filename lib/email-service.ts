@@ -82,7 +82,8 @@ export async function sendContactFormEmail(formData: {
 
   try {
     // En producción, esto debería ser tu dominio verificado
-    const fromEmail = "info@legrinotees.com"
+    const fromEmail = "noreply@legrinotees.com"
+
 
 
     // El destinatario real (se usará en producción)
