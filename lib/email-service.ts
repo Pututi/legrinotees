@@ -27,7 +27,7 @@ export async function sendEmail(data: EmailData): Promise<boolean> {
 
     // Enviar el correo electrónico usando Resend
     const { data: resendData, error } = await resend.emails.send({
-      from: "onboarding@resend.dev", // Siempre usar este remitente en modo de prueba
+      from: from: data.from, // 
       to: recipient,
       subject: data.subject,
       text: data.text,
