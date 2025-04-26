@@ -15,7 +15,8 @@ const resend = new Resend(resendApiKey)
 // Email de prueba (tu propio email)
 const TEST_EMAIL = "gustavopc@icloud.com"
 // Determinar si estamos en modo de producción o desarrollo
-const isProduction = process.env.NODE_ENV === "production"
+const isProduction = true
+
 
 export async function sendEmail(data: EmailData): Promise<boolean> {
   try {
