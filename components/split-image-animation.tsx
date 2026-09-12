@@ -45,13 +45,7 @@ export default function SplitImageAnimation({ image1, image2 }) {
             }}
           >
             <img
-              src={
-                image1Error
-                  ? "/placeholder.svg?height=850&width=1200&query=Urban+Style"
-                  : image1.startsWith("http")
-                    ? image1
-                    : `http://localhost:3000${image1}`
-              }
+              src={image1Error ? "/placeholder.svg?height=850&width=1200&query=Urban+Style" : image1}
               alt="Urban style"
               className="w-full h-full object-cover object-center"
               onError={() => setImage1Error(true)}
@@ -75,13 +69,7 @@ export default function SplitImageAnimation({ image1, image2 }) {
             }}
           >
             <img
-              src={
-                image2Error
-                  ? "/placeholder.svg?height=850&width=1200&query=Colorful+Style"
-                  : image2.startsWith("http")
-                    ? image2
-                    : `http://localhost:3000${image2}`
-              }
+              src={image2Error ? "/placeholder.svg?height=850&width=1200&query=Colorful+Style" : image2}
               alt="Colorful style"
               className="w-full h-full object-cover object-center"
               onError={() => setImage2Error(true)}

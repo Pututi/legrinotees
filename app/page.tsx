@@ -62,9 +62,9 @@ export default function Home() {
   }
 
   // Actualizar las URLs de Cloudinary para usar imágenes de alta calidad
-  const cloudinaryHeroUrl = "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210953/BlackWhite.png"
-  const cloudinaryElbocosaUrl = "https://res.cloudinary.com/dnic69xtm/image/upload/v1744981665/elsentado2.jpg"
-  const cloudinaryAmorososUrl = "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210953/amorosos.jpg"
+  const cloudinaryHeroUrl = "/images/home/chosen-loved-redeemed.png"
+  const cloudinaryElbocosaUrl = "/images/home/strength-and-dignity.png"
+  const cloudinaryAmorososUrl = "/images/home/wildflower-warrior.png"
 
   // Mock language state for demonstration purposes
   const [language, setLanguage] = useState("en")
@@ -94,6 +94,7 @@ export default function Home() {
             }}
           />
         </motion.div>
+        <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center text-center">
           <div className="max-w-3xl px-6">
             {/* Actualizar el título y descripción del hero */}
@@ -167,8 +168,8 @@ export default function Home() {
             >
               <div className="overflow-hidden rounded-lg">
                 <img
-                  src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744210957/lasenatda.png"
-                  alt="Minimalist t-shirt"
+                  src="/images/home/moth-i-came-i-saw.png"
+                  alt="I Came I Saw I Went Home t-shirt"
                   className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -181,8 +182,8 @@ export default function Home() {
             >
               <div className="overflow-hidden rounded-lg">
                 <img
-                  src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744382408/Luxurylife.png"
-                  alt="Urban t-shirt"
+                  src="/images/home/beach-please.png"
+                  alt="Beach Please t-shirt"
                   className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -195,8 +196,8 @@ export default function Home() {
             >
               <div className="overflow-hidden rounded-lg">
                 <img
-                  src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744210955/elsentado.png"
-                  alt="Colorful t-shirt"
+                  src="/images/home/bold-soul.png"
+                  alt="Bold Soul t-shirt"
                   className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
@@ -225,16 +226,16 @@ export default function Home() {
 
       {/* Split vignette effect */}
       <SplitVignette
-        leftImage="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207241/rabbito.png"
-        rightImage="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207240/master2.png"
+        leftImage="/images/home/rhythm.png"
+        rightImage="/images/home/happily-unavailable.png"
         leftText="Urban"
         rightText="Casual"
       />
 
       {/* Split image animation */}
       <SplitImageAnimation
-        image1="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207238/elorejudo.png"
-        image2="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207239/elfumador.png"
+        image1="/images/home/world-in-his-hands.png"
+        image2="/images/home/read-dream-bloom.png"
       />
 
       {/* New Arrivals Section */}
@@ -259,11 +260,11 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop/18">
+              <Link href="/shop">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
-                    src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744922048/ElOjo3.png"
-                    alt="El Ojo"
+                    src="/images/home/dream-loud.png"
+                    alt="Dream Loud"
                     className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
                       console.error("Error loading image")
@@ -271,8 +272,8 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <h3 className="font-medium text-lg">El Fumador Tee</h3>
-                <p className="text-gray-600">39,99 €</p>
+                <h3 className="font-medium text-lg">Dream Loud Tee</h3>
+                <p className="text-gray-600">34,99 €</p>
               </Link>
             </motion.div>
 
@@ -284,11 +285,11 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop/9">
+              <Link href="/shop">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
-                    src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744318764/lahoja.png"
-                    alt="La Hoja"
+                    src="/images/home/inner-force.png"
+                    alt="Inner Force"
                     className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
                       console.error("Error loading image")
@@ -296,8 +297,8 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <h3 className="font-medium text-lg">La Belleza Tee</h3>
-                <p className="text-gray-600">44,99 €</p>
+                <h3 className="font-medium text-lg">Inner Force Tee</h3>
+                <p className="text-gray-600">34,99 €</p>
               </Link>
             </motion.div>
 
@@ -309,11 +310,11 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop/2">
+              <Link href="/shop">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
-                    src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744207241/rabbito.png"
-                    alt="Rabbit Yow Tee"
+                    src="/images/home/no-limits.png"
+                    alt="No Limits"
                     className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
                       console.error("Error loading image")
@@ -321,8 +322,8 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <h3 className="font-medium text-lg">Rabbit Yow Tee</h3>
-                <p className="text-gray-600">29,99 €</p>
+                <h3 className="font-medium text-lg">No Limits Tee</h3>
+                <p className="text-gray-600">34,99 €</p>
               </Link>
             </motion.div>
 
@@ -334,11 +335,11 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop/4">
+              <Link href="/shop">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
-                    src="https://res.cloudinary.com/dnic69xtm/image/upload/v1744264807/djlama.png"
-                    alt="DJ Lama Tee"
+                    src="/images/home/silent-power.png"
+                    alt="Silent Power"
                     className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
                       console.error("Error loading image")
@@ -346,7 +347,7 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <h3 className="font-medium text-lg">DJ Lama Tee</h3>
+                <h3 className="font-medium text-lg">Silent Power Tee</h3>
                 <p className="text-gray-600">34,99 €</p>
               </Link>
             </motion.div>
