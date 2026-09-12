@@ -511,6 +511,24 @@ const products = [
     rating: 5.0,
     reviews: 18,
   },
+  {
+    id: 26,
+    name: "Pray More Worry Less",
+    price: 34.99,
+    description: "A soft, natural-tone t-shirt featuring a delicate floral wreath and the message 'Pray More, Worry Less' inspired by Philippians 4:6.",
+    sizes: ["XS", "S", "M", "L", "XL"],
+    colors: ["Natural"],
+    colorImages: {
+      Natural: "/images/products/pray-more-worry-less-flat.png",
+    },
+    images: [
+      "/images/products/pray-more-worry-less-flat.png",
+      "/images/products/pray-more-worry-less-model.png",
+    ],
+    category: "women",
+    rating: 5.0,
+    reviews: 0,
+  },
 ]
 
 export default function ProductPage() {

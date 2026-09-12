@@ -198,6 +198,13 @@ const products = [
     image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744492224/lapalma.png",
     category: "men",
   },
+  {
+    id: 26,
+    name: "Pray More Worry Less",
+    price: 34.99,
+    image: "/images/products/pray-more-worry-less-flat.png",
+    category: "women",
+  },
 ]
 
 export default function Shop() {
