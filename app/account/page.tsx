@@ -17,6 +17,7 @@ import { useState, useEffect } from "react"
 
 // Asegúrate de que estamos usando el hook useLanguage
 import { useLanguage } from "@/context/language-context"
+import { formatPrice } from "@/lib/currency"
 
 // Define the address type
 interface Address {
@@ -320,7 +321,7 @@ export default function AccountPage() {
                             <p className="text-sm text-gray-500">{new Date(order.date).toLocaleDateString()}</p>
                           </div>
                           <div className="text-right">
-                            <p className="font-medium">${order.total.toFixed(2)}</p>
+                            <p className="font-medium">{formatPrice(order.total)}</p>
                             <p
                               className={`text-sm ${order.status === "Delivered" ? "text-green-600" : "text-blue-600"}`}
                             >
@@ -367,7 +368,7 @@ export default function AccountPage() {
                             </p>
                           </div>
                           <div className="mt-2 md:mt-0 md:text-right">
-                            <p className="font-medium">${order.total.toFixed(2)}</p>
+                            <p className="font-medium">{formatPrice(order.total)}</p>
                             <p
                               className={`text-sm ${order.status === "Delivered" ? "text-green-600" : "text-blue-600"}`}
                             >
@@ -384,7 +385,7 @@ export default function AccountPage() {
                                 <span>
                                   {item.name} x{item.quantity}
                                 </span>
-                                <span>${(item.price * item.quantity).toFixed(2)}</span>
+                                <span>{formatPrice(item.price * item.quantity)}</span>
                               </li>
                             ))}
                           </ul>

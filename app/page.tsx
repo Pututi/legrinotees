@@ -272,7 +272,7 @@ export default function Home() {
                   />
                 </div>
                 <h3 className="font-medium text-lg">El Fumador Tee</h3>
-                <p className="text-gray-600">{language === "de" ? "39,99 €" : "$39.99"}</p>
+                <p className="text-gray-600">39,99 €</p>
               </Link>
             </motion.div>
 
@@ -297,7 +297,7 @@ export default function Home() {
                   />
                 </div>
                 <h3 className="font-medium text-lg">La Belleza Tee</h3>
-                <p className="text-gray-600">{language === "de" ? "44,99 €" : "$44.99"}</p>
+                <p className="text-gray-600">44,99 €</p>
               </Link>
             </motion.div>
 
@@ -322,7 +322,7 @@ export default function Home() {
                   />
                 </div>
                 <h3 className="font-medium text-lg">Rabbit Yow Tee</h3>
-                <p className="text-gray-600">{language === "de" ? "29,99 €" : "$29.99"}</p>
+                <p className="text-gray-600">29,99 €</p>
               </Link>
             </motion.div>
 
@@ -347,7 +347,7 @@ export default function Home() {
                   />
                 </div>
                 <h3 className="font-medium text-lg">DJ Lama Tee</h3>
-                <p className="text-gray-600">{language === "de" ? "34,99 €" : "$34.99"}</p>
+                <p className="text-gray-600">34,99 €</p>
               </Link>
             </motion.div>
           </div>
