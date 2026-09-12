@@ -45,7 +45,7 @@ export default function FAQPage() {
     {
       question: "Do you offer gift wrapping?",
       answer:
-        "Yes, we offer gift wrapping for an additional $5 per item. You can select this option during checkout and include a personalized message for the recipient.",
+        "Yes, we offer gift wrapping for an additional €5 per item. You can select this option during checkout and include a personalized message for the recipient.",
     },
     {
       question: "Can I order by phone?",
@@ -68,7 +68,7 @@ export default function FAQPage() {
     {
       question: "Is free shipping available?",
       answer:
-        "Yes, we offer free standard shipping on all domestic orders over $100. Orders under $100 have a flat shipping rate of $5.99.",
+        "Yes, we offer free standard shipping on all domestic orders over €100. Orders under €100 have a flat shipping rate of €5.99.",
     },
     {
       question: "How can I track my shipment?",

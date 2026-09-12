@@ -69,7 +69,7 @@ export default function ShippingPage() {
                   <ul className="text-sm text-gray-600 space-y-2">
                     <li className="flex justify-between">
                       <span>{t("shipping.standardShippingUnder100")}</span>
-                      <span className="font-medium">$5.99</span>
+                      <span className="font-medium">5,99 €</span>
                     </li>
                     <li className="flex justify-between">
                       <span>{t("shipping.standardShippingOver100")}</span>
@@ -77,11 +77,11 @@ export default function ShippingPage() {
                     </li>
                     <li className="flex justify-between">
                       <span>{t("shipping.expressShipping")}</span>
-                      <span className="font-medium">$12.99</span>
+                      <span className="font-medium">12,99 €</span>
                     </li>
                     <li className="flex justify-between">
                       <span>{t("shipping.internationalShipping")}</span>
-                      <span className="font-medium">$19.99</span>
+                      <span className="font-medium">19,99 €</span>
                     </li>
                   </ul>
                 </div>

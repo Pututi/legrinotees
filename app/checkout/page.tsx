@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useCart } from "@/context/cart-context"
+import { formatPrice } from "@/lib/currency"
 import { CreditCard, CheckCircle2, ChevronRight, ShieldCheck } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -290,7 +291,7 @@ export default function CheckoutPage() {
                           <p className="text-sm text-gray-500">Size: {item.size}</p>
                           <div className="flex justify-between mt-1">
                             <span className="text-sm">Qty: {item.quantity}</span>
-                            <span>${(item.price * item.quantity).toFixed(2)}</span>
+                            <span>{formatPrice(item.price * item.quantity)}</span>
                           </div>
                         </div>
                       </li>
@@ -349,24 +350,24 @@ export default function CheckoutPage() {
             <div className="p-6 space-y-4">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-gray-600">Shipping</span>
                 <span>
-                  {shippingCost === 0 ? <span className="text-green-600">Free</span> : `$${shippingCost.toFixed(2)}`}
+                  {shippingCost === 0 ? <span className="text-green-600">Free</span> : formatPrice(shippingCost)}
                 </span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-gray-600">Tax</span>
-                <span>${tax.toFixed(2)}</span>
+                <span>{formatPrice(tax)}</span>
               </div>
 
               <div className="flex justify-between pt-4 border-t font-medium text-lg">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>{formatPrice(total)}</span>
               </div>
 
               {shippingCost === 0 && (
@@ -375,7 +376,7 @@ export default function CheckoutPage() {
 
               {shippingCost > 0 && (
                 <div className="text-sm text-gray-500 mt-2">
-                  Add ${(100 - subtotal).toFixed(2)} more to qualify for free shipping
+                  Add {formatPrice(100 - subtotal)} more to qualify for free shipping
                 </div>
               )}
             </div>
