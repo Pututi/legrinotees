@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useContext, useState, type ReactNode } from "react"
 
 // Define available languages
 type Language = "en" | "de"
@@ -1048,21 +1048,10 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 // Proveedor del contexto
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  // Estado para el idioma actual
-  const [language, setLanguage] = useState<Language>("en")
-
-  // Cargar el idioma preferido del usuario desde localStorage al montar el componente
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") as Language
-    if (savedLanguage && (savedLanguage === "en" || savedLanguage === "de")) {
-      setLanguage(savedLanguage)
-    }
-  }, [])
-
-  // Guardar el idioma en localStorage cuando cambie
-  useEffect(() => {
-    localStorage.setItem("language", language)
-  }, [language])
+  // Sitio en alemán únicamente. El selector de idioma se quitó porque la
+  // traducción al inglés estaba incompleta; los clientes que necesiten otro
+  // idioma pueden usar el traductor del navegador.
+  const [language, setLanguage] = useState<Language>("de")
 
   // Función para obtener traducciones
   const t = (key: string) => {

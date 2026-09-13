@@ -23,10 +23,10 @@ export default function SplitImageAnimation({ image1, image2 }) {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <motion.h2 className="text-3xl md:text-5xl font-bold mb-6" style={{ opacity, scale }}>
-            Explore Our Styles
+            Entdecke unsere Styles
           </motion.h2>
           <motion.p className="text-lg text-gray-600 max-w-2xl mx-auto" style={{ opacity, scale }}>
-            Discover the perfect style that matches your personality
+            Entdecke den perfekten Style für deine Persönlichkeit
           </motion.p>
         </div>
 
@@ -46,7 +46,7 @@ export default function SplitImageAnimation({ image1, image2 }) {
           >
             <img
               src={image1Error ? "/placeholder.svg?height=850&width=1200&query=Urban+Style" : image1}
-              alt="Urban style"
+              alt="Urbaner Style"
               className="w-full h-full object-cover object-center"
               onError={() => setImage1Error(true)}
             />
@@ -55,7 +55,7 @@ export default function SplitImageAnimation({ image1, image2 }) {
             {/* Texto superpuesto */}
             <div className="absolute bottom-0 left-0 p-6 w-full">
               <h3 className="text-2xl font-bold text-white drop-shadow-lg">Urban</h3>
-              <p className="text-white/90 drop-shadow-md">Modern and sleek designs for city life</p>
+              <p className="text-white/90 drop-shadow-md">Moderne, schlichte Designs für das Stadtleben</p>
             </div>
           </div>
 
@@ -70,7 +70,7 @@ export default function SplitImageAnimation({ image1, image2 }) {
           >
             <img
               src={image2Error ? "/placeholder.svg?height=850&width=1200&query=Colorful+Style" : image2}
-              alt="Colorful style"
+              alt="Bunter Style"
               className="w-full h-full object-cover object-center"
               onError={() => setImage2Error(true)}
             />
@@ -78,8 +78,8 @@ export default function SplitImageAnimation({ image1, image2 }) {
 
             {/* Texto superpuesto */}
             <div className="absolute bottom-0 right-0 p-6 w-full text-right">
-              <h3 className="text-2xl font-bold text-white drop-shadow-lg">Colorful</h3>
-              <p className="text-white/90 drop-shadow-md">Vibrant patterns to express yourself</p>
+              <h3 className="text-2xl font-bold text-white drop-shadow-lg">Bunt</h3>
+              <p className="text-white/90 drop-shadow-md">Lebendige Muster, um dich auszudrücken</p>
             </div>
           </div>
 
@@ -100,14 +100,14 @@ export default function SplitImageAnimation({ image1, image2 }) {
               isHovered ? "opacity-0" : "opacity-100"
             }`}
           >
-            <div className="bg-black/50 text-white px-6 py-3 rounded-full text-sm font-medium">Hover to explore</div>
+            <div className="bg-black/50 text-white px-6 py-3 rounded-full text-sm font-medium">Zum Entdecken bewegen</div>
           </div>
         </motion.div>
 
         {/* Texto descriptivo debajo */}
         <motion.div className="text-center mt-12" style={{ opacity, scale }}>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Our collection features a wide range of styles to suit every taste and occasion.
+            Unsere Kollektion bietet eine große Auswahl an Styles für jeden Geschmack und Anlass.
           </p>
         </motion.div>
       </div>

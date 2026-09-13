@@ -6,7 +6,6 @@ import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import CartIcon from "@/components/cart/cart-icon"
 import UserMenu from "@/components/user-menu"
-import LanguageSwitcher from "@/components/language-switcher"
 import { useLanguage } from "@/context/language-context"
 
 export default function Header() {
@@ -56,7 +55,6 @@ export default function Header() {
           {/* Right side icons */}
           <div className="flex items-center space-x-1 sm:space-x-2">
             <div className="hidden sm:flex items-center space-x-2">
-              <LanguageSwitcher />
               <UserMenu />
             </div>
             <CartIcon />
@@ -112,8 +110,7 @@ export default function Header() {
             </Link>
           </nav>
 
-          <div className="flex sm:hidden items-center justify-between mt-4 pt-4 border-t">
-            <LanguageSwitcher />
+          <div className="flex sm:hidden items-center justify-end mt-4 pt-4 border-t">
             <UserMenu />
           </div>
         </div>
