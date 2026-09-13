@@ -42,7 +42,7 @@ export default function Login() {
 
     // Validate form
     if (!formData.email || !formData.password) {
-      setError("Email and password are required")
+      setError("E-Mail und Passwort sind erforderlich")
       return
     }
 
@@ -54,10 +54,10 @@ export default function Login() {
       if (success) {
         router.push("/account")
       } else {
-        setError("Invalid email or password")
+        setError("Ungültige E-Mail oder ungültiges Passwort")
       }
     } catch (err) {
-      setError("Login failed. Please try again.")
+      setError("Anmeldung fehlgeschlagen. Bitte versuche es erneut.")
     } finally {
       setIsSubmitting(false)
     }
@@ -68,8 +68,8 @@ export default function Login() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <Card>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold">Sign in to your account</CardTitle>
-            <CardDescription>Enter your email and password to access your account</CardDescription>
+            <CardTitle className="text-2xl font-bold">In dein Konto einloggen</CardTitle>
+            <CardDescription>Gib deine E-Mail-Adresse und dein Passwort ein, um auf dein Konto zuzugreifen</CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -78,7 +78,7 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm font-medium">
-                  Email
+                  E-Mail
                 </label>
                 <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required />
               </div>
@@ -86,10 +86,10 @@ export default function Login() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <label htmlFor="password" className="text-sm font-medium">
-                    Password
+                    Passwort
                   </label>
                   <Link href="/forgot-password" className="text-sm text-primary underline">
-                    Forgot password?
+                    Passwort vergessen?
                   </Link>
                 </div>
                 <div className="relative">
@@ -115,17 +115,17 @@ export default function Login() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Signing in...
+                    Anmeldung läuft...
                   </>
                 ) : (
-                  "Sign In"
+                  "Anmelden"
                 )}
               </Button>
 
               <div className="text-center text-sm">
-                Don't have an account?{" "}
+                Du hast noch kein Konto?{" "}
                 <Link href="/register" className="text-primary underline">
-                  Create an account
+                  Konto erstellen
                 </Link>
               </div>
             </form>

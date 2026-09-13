@@ -34,10 +34,10 @@ export default function CheckoutPage() {
   if (items.length === 0 && !orderComplete) {
     return (
       <div className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        <h1 className="text-3xl font-bold mb-6">Your cart is empty</h1>
-        <p className="mb-8">You need to add items to your cart before checking out.</p>
+        <h1 className="text-3xl font-bold mb-6">Dein Warenkorb ist leer</h1>
+        <p className="mb-8">Du musst zuerst Artikel zu deinem Warenkorb hinzufügen, bevor du zur Kasse gehst.</p>
         <Link href="/shop">
-          <Button>Continue Shopping</Button>
+          <Button>Weiter einkaufen</Button>
         </Link>
       </div>
     )
@@ -62,23 +62,23 @@ export default function CheckoutPage() {
             <CheckCircle2 className="w-10 h-10 text-green-600" />
           </motion.div>
 
-          <h1 className="text-3xl font-bold mb-4">Order Confirmed!</h1>
+          <h1 className="text-3xl font-bold mb-4">Bestellung bestätigt!</h1>
           <p className="text-gray-600 mb-8">
-            Thank you for your purchase. We've received your order and will process it right away. You'll receive a
-            confirmation email shortly.
+            Vielen Dank für deinen Einkauf. Wir haben deine Bestellung erhalten und bearbeiten sie umgehend. Du
+            erhältst in Kürze eine Bestätigungs-E-Mail.
           </p>
 
           <div className="mb-8 p-4 bg-gray-50 rounded-lg">
-            <h2 className="font-medium mb-2">Order #LEGRINO-{Math.floor(Math.random() * 10000)}</h2>
-            <p className="text-sm text-gray-500">Estimated delivery: 3-5 business days</p>
+            <h2 className="font-medium mb-2">Bestellung #LEGRINO-{Math.floor(Math.random() * 10000)}</h2>
+            <p className="text-sm text-gray-500">Voraussichtliche Lieferung: 3-5 Werktage</p>
           </div>
 
           <div className="flex justify-center space-x-4">
             <Link href="/">
-              <Button variant="outline">Return Home</Button>
+              <Button variant="outline">Zur Startseite</Button>
             </Link>
             <Link href="/shop">
-              <Button>Continue Shopping</Button>
+              <Button>Weiter einkaufen</Button>
             </Link>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function CheckoutPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Checkout
+        Kasse
       </motion.h1>
 
       {/* Checkout steps */}
@@ -119,9 +119,9 @@ export default function CheckoutPage() {
           </div>
         </div>
         <div className="flex justify-between mt-2 text-sm">
-          <span>Shipping</span>
-          <span>Payment</span>
-          <span>Review</span>
+          <span>Versand</span>
+          <span>Zahlung</span>
+          <span>Überprüfung</span>
         </div>
       </div>
 
@@ -137,18 +137,18 @@ export default function CheckoutPage() {
             {/* Step 1: Shipping Information */}
             {step === 1 && (
               <div className="p-6">
-                <h2 className="text-xl font-medium mb-6">Shipping Information</h2>
+                <h2 className="text-xl font-medium mb-6">Versandinformationen</h2>
                 <form className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="firstName" className="block text-sm font-medium mb-1">
-                        First Name
+                        Vorname
                       </label>
                       <Input id="firstName" required />
                     </div>
                     <div>
                       <label htmlFor="lastName" className="block text-sm font-medium mb-1">
-                        Last Name
+                        Nachname
                       </label>
                       <Input id="lastName" required />
                     </div>
@@ -156,21 +156,21 @@ export default function CheckoutPage() {
 
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-1">
-                      Email
+                      E-Mail
                     </label>
                     <Input id="email" type="email" required />
                   </div>
 
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium mb-1">
-                      Phone
+                      Telefon
                     </label>
                     <Input id="phone" type="tel" required />
                   </div>
 
                   <div>
                     <label htmlFor="address" className="block text-sm font-medium mb-1">
-                      Address
+                      Adresse
                     </label>
                     <Input id="address" required />
                   </div>
@@ -178,19 +178,19 @@ export default function CheckoutPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label htmlFor="city" className="block text-sm font-medium mb-1">
-                        City
+                        Stadt
                       </label>
                       <Input id="city" required />
                     </div>
                     <div>
                       <label htmlFor="state" className="block text-sm font-medium mb-1">
-                        State
+                        Bundesland
                       </label>
                       <Input id="state" required />
                     </div>
                     <div>
                       <label htmlFor="zip" className="block text-sm font-medium mb-1">
-                        ZIP Code
+                        Postleitzahl
                       </label>
                       <Input id="zip" required />
                     </div>
@@ -198,14 +198,14 @@ export default function CheckoutPage() {
 
                   <div>
                     <label htmlFor="notes" className="block text-sm font-medium mb-1">
-                      Order Notes (Optional)
+                      Anmerkungen zur Bestellung (Optional)
                     </label>
                     <Textarea id="notes" rows={3} />
                   </div>
 
                   <div className="flex justify-end mt-6">
                     <Button onClick={() => setStep(2)} className="flex items-center">
-                      Continue to Payment
+                      Weiter zur Zahlung
                       <ChevronRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
@@ -216,18 +216,18 @@ export default function CheckoutPage() {
             {/* Step 2: Payment Information */}
             {step === 2 && (
               <div className="p-6">
-                <h2 className="text-xl font-medium mb-6">Payment Information</h2>
+                <h2 className="text-xl font-medium mb-6">Zahlungsinformationen</h2>
                 <form className="space-y-4">
                   <div>
                     <label htmlFor="cardName" className="block text-sm font-medium mb-1">
-                      Name on Card
+                      Name auf der Karte
                     </label>
                     <Input id="cardName" required />
                   </div>
 
                   <div>
                     <label htmlFor="cardNumber" className="block text-sm font-medium mb-1">
-                      Card Number
+                      Kartennummer
                     </label>
                     <div className="relative">
                       <Input id="cardNumber" placeholder="1234 5678 9012 3456" required />
@@ -238,9 +238,9 @@ export default function CheckoutPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="expiry" className="block text-sm font-medium mb-1">
-                        Expiry Date
+                        Ablaufdatum
                       </label>
-                      <Input id="expiry" placeholder="MM/YY" required />
+                      <Input id="expiry" placeholder="MM/JJ" required />
                     </div>
                     <div>
                       <label htmlFor="cvc" className="block text-sm font-medium mb-1">
@@ -252,15 +252,15 @@ export default function CheckoutPage() {
 
                   <div className="flex items-center mt-4">
                     <ShieldCheck className="w-5 h-5 text-gray-500 mr-2" />
-                    <span className="text-sm text-gray-500">Your payment information is secure and encrypted</span>
+                    <span className="text-sm text-gray-500">Deine Zahlungsinformationen sind sicher und verschlüsselt</span>
                   </div>
 
                   <div className="flex justify-between mt-6">
                     <Button variant="outline" onClick={() => setStep(1)}>
-                      Back
+                      Zurück
                     </Button>
                     <Button onClick={() => setStep(3)} className="flex items-center">
-                      Review Order
+                      Bestellung überprüfen
                       <ChevronRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
@@ -271,10 +271,10 @@ export default function CheckoutPage() {
             {/* Step 3: Review Order */}
             {step === 3 && (
               <div className="p-6">
-                <h2 className="text-xl font-medium mb-6">Review Your Order</h2>
+                <h2 className="text-xl font-medium mb-6">Überprüfe deine Bestellung</h2>
 
                 <div className="space-y-4 mb-6">
-                  <h3 className="font-medium">Order Items</h3>
+                  <h3 className="font-medium">Bestellte Artikel</h3>
                   <ul className="divide-y">
                     {items.map((item, index) => (
                       <li key={index} className="py-4 flex">
@@ -288,9 +288,9 @@ export default function CheckoutPage() {
                         </div>
                         <div className="flex-1">
                           <h4 className="font-medium">{item.name}</h4>
-                          <p className="text-sm text-gray-500">Size: {item.size}</p>
+                          <p className="text-sm text-gray-500">Größe: {item.size}</p>
                           <div className="flex justify-between mt-1">
-                            <span className="text-sm">Qty: {item.quantity}</span>
+                            <span className="text-sm">Menge: {item.quantity}</span>
                             <span>{formatPrice(item.price * item.quantity)}</span>
                           </div>
                         </div>
@@ -300,33 +300,33 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="border-t pt-4 mb-6">
-                  <h3 className="font-medium mb-3">Shipping Address</h3>
+                  <h3 className="font-medium mb-3">Lieferadresse</h3>
                   <p className="text-gray-600">
-                    John Doe
+                    Max Mustermann
                     <br />
-                    123 Main St
+                    Musterstraße 1
                     <br />
-                    New York, NY 10001
+                    10115 Berlin
                     <br />
-                    United States
+                    Deutschland
                   </p>
                 </div>
 
                 <div className="border-t pt-4 mb-6">
-                  <h3 className="font-medium mb-3">Payment Method</h3>
+                  <h3 className="font-medium mb-3">Zahlungsmethode</h3>
                   <div className="flex items-center">
                     <CreditCard className="w-5 h-5 mr-2 text-gray-600" />
-                    <span>Credit Card ending in 3456</span>
+                    <span>Kreditkarte endet auf 3456</span>
                   </div>
                 </div>
 
                 <form onSubmit={handleSubmitOrder}>
                   <div className="flex justify-between mt-6">
                     <Button variant="outline" onClick={() => setStep(2)} type="button">
-                      Back
+                      Zurück
                     </Button>
                     <Button type="submit" className="flex items-center">
-                      Place Order
+                      Bestellung aufgeben
                       <ChevronRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
@@ -344,39 +344,39 @@ export default function CheckoutPage() {
         >
           <div className="bg-white rounded-lg shadow-sm overflow-hidden sticky top-24">
             <div className="p-6 border-b">
-              <h2 className="text-xl font-medium">Order Summary</h2>
+              <h2 className="text-xl font-medium">Bestellübersicht</h2>
             </div>
 
             <div className="p-6 space-y-4">
               <div className="flex justify-between">
-                <span className="text-gray-600">Subtotal</span>
+                <span className="text-gray-600">Zwischensumme</span>
                 <span>{formatPrice(subtotal)}</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-gray-600">Shipping</span>
+                <span className="text-gray-600">Versand</span>
                 <span>
-                  {shippingCost === 0 ? <span className="text-green-600">Free</span> : formatPrice(shippingCost)}
+                  {shippingCost === 0 ? <span className="text-green-600">Kostenlos</span> : formatPrice(shippingCost)}
                 </span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-gray-600">Tax</span>
+                <span className="text-gray-600">MwSt.</span>
                 <span>{formatPrice(tax)}</span>
               </div>
 
               <div className="flex justify-between pt-4 border-t font-medium text-lg">
-                <span>Total</span>
+                <span>Gesamt</span>
                 <span>{formatPrice(total)}</span>
               </div>
 
               {shippingCost === 0 && (
-                <div className="text-sm text-green-600 mt-2">You've qualified for free shipping!</div>
+                <div className="text-sm text-green-600 mt-2">Du hast dir kostenlosen Versand gesichert!</div>
               )}
 
               {shippingCost > 0 && (
                 <div className="text-sm text-gray-500 mt-2">
-                  Add {formatPrice(100 - subtotal)} more to qualify for free shipping
+                  Noch {formatPrice(100 - subtotal)} bis zum kostenlosen Versand
                 </div>
               )}
             </div>
