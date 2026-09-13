@@ -41,22 +41,21 @@ export default function Home() {
   // Estado para controlar si la imagen de Cloudinary falló
   const [cloudinaryFailed, setCloudinaryFailed] = useState(false)
 
-  // Función simple de traducción para evitar problemas con el contexto
+  // Sitio en alemán únicamente
   const t = (key: string): string => {
-    // Mapeo simple de traducciones
     const translations: Record<string, string> = {
-      "home.hero.title": "Minimalist Style",
-      "home.hero.description": "Discover our collection of premium minimalist t-shirts designed for comfort and style.",
-      "home.hero.cta": "Shop Now",
-      "home.collection.title": "Our Collection",
-      "home.categories.title": "Explore Our Categories",
-      "home.categories.men": "Men's Collection",
-      "home.categories.women": "Women's Collection",
-      "home.categories.limited": "Limited Edition",
-      "home.crafted.title": "Crafted with Care",
-      "home.crafted.description": "Each t-shirt is made with premium materials and attention to detail.",
-      "home.sustainable.title": "Sustainable Fashion",
-      "home.sustainable.description": "Our commitment to the environment is reflected in every piece we create.",
+      "home.hero.title": "Minimalistischer Stil",
+      "home.hero.description": "Entdecke unsere Kollektion hochwertiger minimalistischer T-Shirts für Komfort und Stil.",
+      "home.hero.cta": "Jetzt einkaufen",
+      "home.collection.title": "Unsere Kollektion",
+      "home.categories.title": "Entdecke unsere Kategorien",
+      "home.categories.men": "Herrenkollektion",
+      "home.categories.women": "Damenkollektion",
+      "home.categories.limited": "Limitierte Edition",
+      "home.crafted.title": "Mit Sorgfalt gefertigt",
+      "home.crafted.description": "Jedes T-Shirt wird aus hochwertigen Materialien und mit viel Liebe zum Detail hergestellt.",
+      "home.sustainable.title": "Nachhaltige Mode",
+      "home.sustainable.description": "Unser Engagement für die Umwelt spiegelt sich in jedem Stück wider, das wir schaffen.",
     }
     return translations[key] || key
   }
@@ -67,7 +66,7 @@ export default function Home() {
   const cloudinaryAmorososUrl = "/images/home/wildflower-warrior.png"
 
   // Mock language state for demonstration purposes
-  const [language, setLanguage] = useState("en")
+  const [language, setLanguage] = useState("de")
 
   // Si el componente no está montado, devolver null o un placeholder
   if (!isMounted) {
@@ -441,7 +440,7 @@ function ParallaxZoomSection({ imageSrc, title, description }: ParallaxSectionPr
           <div className="mt-8">
             <Link href="/shop">
               <Button size="lg" className="rounded-full px-8 py-6 text-lg">
-                Shop Now
+                Jetzt einkaufen
               </Button>
             </Link>
           </div>
