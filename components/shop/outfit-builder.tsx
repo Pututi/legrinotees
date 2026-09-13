@@ -107,7 +107,7 @@ export default function OutfitBuilder({ category }: { category: "men" | "women" 
 
   return (
     <motion.div
-      className="w-full mt-16 mb-12 bg-gray-50 p-6 md:p-8 rounded-xl"
+      className="w-full min-w-0 mt-16 mb-12 bg-gray-50 p-6 md:p-8 rounded-xl"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -121,21 +121,17 @@ export default function OutfitBuilder({ category }: { category: "men" | "women" 
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-8 min-w-0">
         {/* Live preview */}
-        <div className="grid grid-cols-2 gap-4 bg-white rounded-lg p-4">
-          <div className="col-span-2">
-            <Tile image={shirt.image} label={shirt.name} selected size="lg" onClick={() => {}} />
-          </div>
+        <div className="grid grid-cols-2 gap-3 bg-white rounded-lg p-4 min-w-0 max-w-sm mx-auto md:max-w-none md:mx-0">
+          <Tile image={shirt.image} label={shirt.name} selected size="lg" onClick={() => {}} />
           <Tile image={bottom.image} label={bottom.name} selected size="lg" onClick={() => {}} />
           <Tile image={outer.image} label={outer.name} selected size="lg" onClick={() => {}} />
-          <div className="col-span-2">
-            <Tile image={shoes.image} label={shoes.name} selected size="lg" onClick={() => {}} />
-          </div>
+          <Tile image={shoes.image} label={shoes.name} selected size="lg" onClick={() => {}} />
         </div>
 
         {/* Pickers */}
-        <div className="space-y-6">
+        <div className="space-y-6 min-w-0">
           <div>
             <p className="font-medium mb-2">
               {shirtLabel} — <span className="text-gray-500 font-normal">{shirt.name}</span>
