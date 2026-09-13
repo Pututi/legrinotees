@@ -13,7 +13,7 @@ export default function WomenFeaturedCollections() {
         language === "de"
           ? "Elegante, minimalistische Designs für die moderne Frau"
           : "Elegant, minimalist designs for the modern woman",
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210993/labelleza.png",
+      image: "/images/products/chosen-loved-redeemed.png",
     },
     {
       id: 2,
@@ -22,13 +22,13 @@ export default function WomenFeaturedCollections() {
         language === "de"
           ? "Einzigartige künstlerische Designs für kreative Geister"
           : "Unique artistic designs for creative spirits",
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744922048/ElOjo3.png",
+      image: "/images/products/moon-dancer.png",
     },
     {
       id: 3,
       name: language === "de" ? "Urbane Kollektion" : "Urban Collection",
       description: language === "de" ? "Urbane Styles für das Stadtleben" : "Urban styles for city living",
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207237/elny.png",
+      image: "/images/products/read-dream-bloom.png",
     },
   ]
 

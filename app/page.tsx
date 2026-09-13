@@ -166,11 +166,11 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="overflow-hidden rounded-lg">
+              <div className="overflow-hidden rounded-lg aspect-[3/4]">
                 <img
                   src="/images/home/moth-i-came-i-saw.png"
                   alt="I Came I Saw I Went Home t-shirt"
-                  className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
             </motion.div>
@@ -180,11 +180,11 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="overflow-hidden rounded-lg">
+              <div className="overflow-hidden rounded-lg aspect-[3/4]">
                 <img
                   src="/images/home/beach-please.png"
                   alt="Beach Please t-shirt"
-                  className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
             </motion.div>
@@ -194,11 +194,11 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="overflow-hidden rounded-lg">
+              <div className="overflow-hidden rounded-lg aspect-[3/4] bg-gray-50">
                 <img
                   src="/images/home/bold-soul.png"
                   alt="Bold Soul t-shirt"
-                  className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-contain transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
             </motion.div>
@@ -260,7 +260,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop">
+              <Link href="/shop/16">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
                     src="/images/home/dream-loud.png"
@@ -285,7 +285,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop">
+              <Link href="/shop/17">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
                     src="/images/home/inner-force.png"
@@ -310,7 +310,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop">
+              <Link href="/shop/18">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
                     src="/images/home/no-limits.png"
@@ -335,7 +335,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop">
+              <Link href="/shop/19">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
                     src="/images/home/silent-power.png"

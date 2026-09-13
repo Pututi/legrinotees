@@ -13,32 +13,32 @@ export default function WomenNewArrivals() {
 
   const newArrivals = [
     {
-      id: 22,
-      name: "La Belleza",
-      price: 44.99,
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210993/labelleza.png",
+      id: 4,
+      name: "Wildflower Warrior",
+      price: 32.99,
+      image: "/images/products/wildflower-warrior.png",
+      colors: ["Beige"],
+    },
+    {
+      id: 6,
+      name: "Beach Please",
+      price: 29.99,
+      image: "/images/products/beach-please.png",
       colors: ["White"],
     },
     {
-      id: 18,
-      name: "The Eyes are the Window",
-      price: 39.99,
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744922048/ElOjo3.png",
-      colors: ["Black"],
-    },
-    {
-      id: 23,
-      name: "Mariposa Deluxe",
-      price: 49.99,
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210993/lamariposa2.png",
+      id: 11,
+      name: "Solitude is my Superpower",
+      price: 32.99,
+      image: "/images/products/solitude-superpower.png",
       colors: ["White"],
     },
     {
-      id: 17,
-      name: "New York Edition",
-      price: 44.99,
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207237/elny.png",
-      colors: ["Black"],
+      id: 14,
+      name: "Busy Do Not Disturb",
+      price: 29.99,
+      image: "/images/products/busy-do-not-disturb.png",
+      colors: ["White"],
     },
   ]
 

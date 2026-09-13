@@ -22,8 +22,10 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <div className="text-xl font-bold hover:text-gray-700 transition-colors duration-300">LEGRINO TEES</div>
+          <Link href="/" className="flex items-center flex-shrink-0">
+            <div className="text-base sm:text-xl font-bold whitespace-nowrap hover:text-gray-700 transition-colors duration-300">
+              LEGRINO TEES
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -52,9 +54,11 @@ export default function Header() {
           </nav>
 
           {/* Right side icons */}
-          <div className="flex items-center space-x-2">
-            <LanguageSwitcher />
-            <UserMenu />
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <div className="hidden sm:flex items-center space-x-2">
+              <LanguageSwitcher />
+              <UserMenu />
+            </div>
             <CartIcon />
 
             {/* Mobile menu button */}
@@ -107,6 +111,11 @@ export default function Header() {
               {t("nav.contact")}
             </Link>
           </nav>
+
+          <div className="flex sm:hidden items-center justify-between mt-4 pt-4 border-t">
+            <LanguageSwitcher />
+            <UserMenu />
+          </div>
         </div>
       </motion.div>
     </header>
