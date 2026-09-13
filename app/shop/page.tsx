@@ -161,6 +161,55 @@ const products = [
     image: "/images/products/rhythm.png",
     category: "men",
   },
+  {
+    id: 21,
+    name: "Mix Tape",
+    price: 34.99,
+    image: "/images/products/mix-tape-black.png",
+    category: "men",
+  },
+  {
+    id: 22,
+    name: "Protect Your Peace",
+    price: 32.99,
+    image: "/images/products/protect-your-peace-1.png",
+    category: "men",
+  },
+  {
+    id: 23,
+    name: "Gorilla Ballerina",
+    price: 32.99,
+    image: "/images/products/gorilla-ballerina-white.png",
+    category: "men",
+  },
+  {
+    id: 24,
+    name: "Tokyo Land of the Rhythm",
+    price: 34.99,
+    image: "/images/products/tokyo-rhythm-1.png",
+    category: "men",
+  },
+  {
+    id: 25,
+    name: "Rhythm Squad",
+    price: 29.99,
+    image: "/images/products/rhythm-squad-1.png",
+    category: "men",
+  },
+  {
+    id: 26,
+    name: "I Am Watching You Dance",
+    price: 32.99,
+    image: "/images/products/watching-you-dance-1.png",
+    category: "men",
+  },
+  {
+    id: 27,
+    name: "Life's Better by the Sea",
+    price: 29.99,
+    image: "/images/products/better-by-the-sea-1.png",
+    category: "men",
+  },
 ]
 
 export default function Shop() {
