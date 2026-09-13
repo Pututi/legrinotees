@@ -10,207 +10,14 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useLanguage } from "@/context/language-context"
 import { formatPrice } from "@/lib/currency"
+import { products } from "@/lib/products"
 import MenPromoSection from "@/components/shop/men-promo-section"
 import WomenPromoSection from "@/components/shop/women-promo-section"
 import MenFeaturedCollections from "@/components/shop/men-featured-collections"
 import MenNewArrivals from "@/components/shop/men-new-arrivals"
 import WomenFeaturedCollections from "@/components/shop/women-featured-collections"
 import WomenNewArrivals from "@/components/shop/women-new-arrivals"
-import OutfitSuggestionsWomen from "@/components/shop/outfit-suggestions-women-alt"
-import OutfitSuggestionsMen from "@/components/shop/outfit-suggestions-men-alt"
-
-// Catálogo 2026: diseños propios, alojados en /public en vez de Cloudinary
-const products = [
-  {
-    id: 1,
-    name: "Pray More Worry Less",
-    price: 34.99,
-    image: "/images/products/pray-more-worry-less-flat.png",
-    category: "women",
-  },
-  {
-    id: 2,
-    name: "Chosen Loved Redeemed",
-    price: 34.99,
-    image: "/images/products/chosen-loved-redeemed.png",
-    category: "women",
-  },
-  {
-    id: 3,
-    name: "Strength and Dignity",
-    price: 34.99,
-    image: "/images/products/strength-and-dignity.png",
-    category: "women",
-  },
-  {
-    id: 4,
-    name: "Wildflower Warrior",
-    price: 32.99,
-    image: "/images/products/wildflower-warrior.png",
-    category: "women",
-  },
-  {
-    id: 5,
-    name: "I Came I Saw I Went Home",
-    price: 32.99,
-    image: "/images/products/moth-i-came-i-saw.png",
-    category: "women",
-  },
-  {
-    id: 6,
-    name: "Beach Please",
-    price: 29.99,
-    image: "/images/products/beach-please.png",
-    category: "women",
-  },
-  {
-    id: 7,
-    name: "Happily Unavailable",
-    price: 29.99,
-    image: "/images/products/happily-unavailable.png",
-    category: "women",
-  },
-  {
-    id: 8,
-    name: "World in His Hands",
-    price: 34.99,
-    image: "/images/products/world-in-his-hands.png",
-    category: "limited",
-  },
-  {
-    id: 9,
-    name: "Read Dream Bloom",
-    price: 32.99,
-    image: "/images/products/read-dream-bloom.png",
-    category: "women",
-  },
-  {
-    id: 10,
-    name: "Born With Rhythm",
-    price: 34.99,
-    image: "/images/products/born-with-rhythm-sun.png",
-    category: "limited",
-  },
-  {
-    id: 11,
-    name: "Solitude is my Superpower",
-    price: 32.99,
-    image: "/images/products/solitude-superpower.png",
-    category: "women",
-  },
-  {
-    id: 12,
-    name: "Alone in Space",
-    price: 32.99,
-    image: "/images/products/alone-in-space.png",
-    category: "limited",
-  },
-  {
-    id: 13,
-    name: "Moon Dancer",
-    price: 34.99,
-    image: "/images/products/moon-dancer.png",
-    category: "women",
-  },
-  {
-    id: 14,
-    name: "Busy Do Not Disturb",
-    price: 29.99,
-    image: "/images/products/busy-do-not-disturb.png",
-    category: "women",
-  },
-  {
-    id: 15,
-    name: "Bold Soul",
-    price: 34.99,
-    image: "/images/products/bold-soul.png",
-    category: "men",
-  },
-  {
-    id: 16,
-    name: "Dream Loud",
-    price: 34.99,
-    image: "/images/products/dream-loud.png",
-    category: "men",
-  },
-  {
-    id: 17,
-    name: "Inner Force",
-    price: 34.99,
-    image: "/images/products/inner-force.png",
-    category: "men",
-  },
-  {
-    id: 18,
-    name: "No Limits",
-    price: 34.99,
-    image: "/images/products/no-limits.png",
-    category: "men",
-  },
-  {
-    id: 19,
-    name: "Silent Power",
-    price: 34.99,
-    image: "/images/products/silent-power.png",
-    category: "limited",
-  },
-  {
-    id: 20,
-    name: "Rhythm",
-    price: 34.99,
-    image: "/images/products/rhythm.png",
-    category: "men",
-  },
-  {
-    id: 21,
-    name: "Mix Tape",
-    price: 34.99,
-    image: "/images/products/mix-tape-black.png",
-    category: "men",
-  },
-  {
-    id: 22,
-    name: "Protect Your Peace",
-    price: 32.99,
-    image: "/images/products/protect-your-peace-1.png",
-    category: "men",
-  },
-  {
-    id: 23,
-    name: "Gorilla Ballerina",
-    price: 32.99,
-    image: "/images/products/gorilla-ballerina-white.png",
-    category: "men",
-  },
-  {
-    id: 24,
-    name: "Tokyo Land of the Rhythm",
-    price: 34.99,
-    image: "/images/products/tokyo-rhythm-1.png",
-    category: "men",
-  },
-  {
-    id: 25,
-    name: "Rhythm Squad",
-    price: 29.99,
-    image: "/images/products/rhythm-squad-1.png",
-    category: "men",
-  },
-  {
-    id: 26,
-    name: "I Am Watching You Dance",
-    price: 32.99,
-    image: "/images/products/watching-you-dance-1.png",
-    category: "men",
-  },
-  {
-    id: 27,
-    name: "Life's Better by the Sea",
-    price: 29.99,
-    image: "/images/products/better-by-the-sea-1.png",
-    category: "men",
-  },
-]
+import OutfitBuilder from "@/components/shop/outfit-builder"
 
 export default function Shop() {
   const searchParams = useSearchParams()
@@ -325,8 +132,8 @@ export default function Shop() {
         </div>
 
         {/* Mostrar las secciones de outfits según la categoría */}
-        {activeCategory === "women" && <OutfitSuggestionsWomen />}
-        {activeCategory === "men" && <OutfitSuggestionsMen />}
+        {activeCategory === "women" && <OutfitBuilder category="women" />}
+        {activeCategory === "men" && <OutfitBuilder category="men" />}
       </div>
     </div>
   )
