@@ -45,17 +45,17 @@ export default function Register() {
 
     // Validate form
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-      setError("All fields are required")
+      setError("Alle Felder sind erforderlich")
       return
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match")
+      setError("Die Passwörter stimmen nicht überein")
       return
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters")
+      setError("Das Passwort muss mindestens 6 Zeichen lang sein")
       return
     }
 
@@ -72,10 +72,10 @@ export default function Register() {
       if (success) {
         router.push("/account")
       } else {
-        setError("Email already in use. Please try another email or login.")
+        setError("Diese E-Mail wird bereits verwendet. Bitte verwende eine andere oder melde dich an.")
       }
     } catch (err) {
-      setError("Registration failed. Please try again.")
+      setError("Registrierung fehlgeschlagen. Bitte versuche es erneut.")
     } finally {
       setIsSubmitting(false)
     }
@@ -86,8 +86,8 @@ export default function Register() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <Card>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
-            <CardDescription>Enter your information to create an account</CardDescription>
+            <CardTitle className="text-2xl font-bold">Konto erstellen</CardTitle>
+            <CardDescription>Gib deine Daten ein, um ein Konto zu erstellen</CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -97,14 +97,14 @@ export default function Register() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label htmlFor="firstName" className="text-sm font-medium">
-                    First Name
+                    Vorname
                   </label>
                   <Input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required />
                 </div>
 
                 <div className="space-y-2">
                   <label htmlFor="lastName" className="text-sm font-medium">
-                    Last Name
+                    Nachname
                   </label>
                   <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required />
                 </div>
@@ -112,14 +112,14 @@ export default function Register() {
 
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm font-medium">
-                  Email
+                  E-Mail
                 </label>
                 <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required />
               </div>
 
               <div className="space-y-2">
                 <label htmlFor="password" className="text-sm font-medium">
-                  Password
+                  Passwort
                 </label>
                 <div className="relative">
                   <Input
@@ -142,7 +142,7 @@ export default function Register() {
 
               <div className="space-y-2">
                 <label htmlFor="confirmPassword" className="text-sm font-medium">
-                  Confirm Password
+                  Passwort bestätigen
                 </label>
                 <Input
                   id="confirmPassword"
@@ -158,17 +158,17 @@ export default function Register() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creating Account...
+                    Konto wird erstellt...
                   </>
                 ) : (
-                  "Create Account"
+                  "Konto erstellen"
                 )}
               </Button>
 
               <div className="text-center text-sm">
-                Already have an account?{" "}
+                Du hast bereits ein Konto?{" "}
                 <Link href="/login" className="text-primary underline">
-                  Sign in
+                  Anmelden
                 </Link>
               </div>
             </form>
