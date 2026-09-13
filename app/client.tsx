@@ -30,6 +30,14 @@ export default function RootClient({
     setMounted(true)
   }, [])
 
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch((err) => {
+        console.error("Service worker registration failed:", err)
+      })
+    }
+  }, [])
+
   return (
     <html lang="de" suppressHydrationWarning>
       <body className={inter.className}>
