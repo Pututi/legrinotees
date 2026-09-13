@@ -66,7 +66,7 @@ export default function OutfitBuilder({ category }: { category: "men" | "women" 
   const { language } = useLanguage()
   const { addItem } = useCart()
 
-  const shirts = products.filter((p) => p.category === category || p.category === "limited")
+  const shirts = products.filter((p) => p.gender === category || p.gender === "unisex")
   const opts = accessories[category]
 
   const [shirt, setShirt] = useState(shirts[0])

@@ -6,6 +6,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/pray-more-worry-less-flat.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 2,
@@ -13,6 +14,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/chosen-loved-redeemed.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 3,
@@ -20,6 +22,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/strength-and-dignity.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 4,
@@ -27,6 +30,7 @@ export const products = [
     price: 32.99,
     image: "/images/products/wildflower-warrior.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 5,
@@ -34,6 +38,7 @@ export const products = [
     price: 32.99,
     image: "/images/products/moth-i-came-i-saw.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 6,
@@ -41,6 +46,7 @@ export const products = [
     price: 29.99,
     image: "/images/products/beach-please.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 7,
@@ -48,6 +54,7 @@ export const products = [
     price: 29.99,
     image: "/images/products/happily-unavailable.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 8,
@@ -55,6 +62,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/world-in-his-hands.png",
     category: "limited",
+    gender: "women",
   },
   {
     id: 9,
@@ -62,6 +70,7 @@ export const products = [
     price: 32.99,
     image: "/images/products/read-dream-bloom.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 10,
@@ -69,6 +78,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/born-with-rhythm-sun.png",
     category: "limited",
+    gender: "unisex",
   },
   {
     id: 11,
@@ -76,6 +86,7 @@ export const products = [
     price: 32.99,
     image: "/images/products/solitude-superpower.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 12,
@@ -83,6 +94,7 @@ export const products = [
     price: 32.99,
     image: "/images/products/alone-in-space.png",
     category: "limited",
+    gender: "women",
   },
   {
     id: 13,
@@ -90,6 +102,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/moon-dancer.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 14,
@@ -97,6 +110,7 @@ export const products = [
     price: 29.99,
     image: "/images/products/busy-do-not-disturb.png",
     category: "women",
+    gender: "women",
   },
   {
     id: 15,
@@ -104,6 +118,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/bold-soul.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 16,
@@ -111,6 +126,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/dream-loud.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 17,
@@ -118,6 +134,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/inner-force.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 18,
@@ -125,6 +142,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/no-limits.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 19,
@@ -132,6 +150,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/silent-power.png",
     category: "limited",
+    gender: "unisex",
   },
   {
     id: 20,
@@ -139,6 +158,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/rhythm.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 21,
@@ -146,6 +166,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/mix-tape-black.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 22,
@@ -153,6 +174,7 @@ export const products = [
     price: 32.99,
     image: "/images/products/protect-your-peace-1.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 23,
@@ -160,6 +182,7 @@ export const products = [
     price: 32.99,
     image: "/images/products/gorilla-ballerina-white.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 24,
@@ -167,6 +190,7 @@ export const products = [
     price: 34.99,
     image: "/images/products/tokyo-rhythm-1.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 25,
@@ -174,6 +198,7 @@ export const products = [
     price: 29.99,
     image: "/images/products/rhythm-squad-1.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 26,
@@ -181,6 +206,7 @@ export const products = [
     price: 32.99,
     image: "/images/products/watching-you-dance-1.png",
     category: "men",
+    gender: "men",
   },
   {
     id: 27,
@@ -188,5 +214,6 @@ export const products = [
     price: 29.99,
     image: "/images/products/better-by-the-sea-1.png",
     category: "men",
+    gender: "men",
   },
 ]
