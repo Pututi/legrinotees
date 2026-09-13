@@ -13,32 +13,32 @@ export default function MenNewArrivals() {
 
   const newArrivals = [
     {
-      id: 19,
-      name: "El Fumador Black",
-      price: 39.99,
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207235/elfumador2.png",
-      colors: ["Black"],
-    },
-    {
-      id: 3,
-      name: "Chicken Legs",
+      id: 15,
+      name: "Bold Soul",
       price: 34.99,
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207231/Chickenleg.png",
-      colors: ["Black"],
+      image: "/images/products/bold-soul.png",
+      colors: ["Beige"],
     },
     {
-      id: 4,
-      name: "DJ Lama",
+      id: 16,
+      name: "Dream Loud",
       price: 34.99,
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744264807/djlama.png",
+      image: "/images/products/dream-loud.png",
+      colors: ["Beige"],
+    },
+    {
+      id: 17,
+      name: "Inner Force",
+      price: 34.99,
+      image: "/images/products/inner-force.png",
       colors: ["Black"],
     },
     {
-      id: 25,
-      name: "La Palma",
-      price: 39.99,
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744492224/lapalma.png",
-      colors: ["Black"],
+      id: 20,
+      name: "Rhythm",
+      price: 34.99,
+      image: "/images/products/rhythm.png",
+      colors: ["White"],
     },
   ]
 

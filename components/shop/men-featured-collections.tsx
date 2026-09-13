@@ -13,7 +13,7 @@ export default function MenFeaturedCollections() {
         language === "de"
           ? "Unsere urbane Kollektion für den modernen Mann"
           : "Our urban collection for the modern man",
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207240/master2.png",
+      image: "/images/products/bold-soul.png",
     },
     {
       id: 2,
@@ -22,13 +22,13 @@ export default function MenFeaturedCollections() {
         language === "de"
           ? "Ausdrucksstarke Designs für einzigartige Persönlichkeiten"
           : "Expressive designs for unique personalities",
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207239/elfumador.png",
+      image: "/images/products/inner-force.png",
     },
     {
       id: 3,
       name: language === "de" ? "Essenzielle Basics" : "Essential Basics",
       description: language === "de" ? "Zeitlose Klassiker für jeden Tag" : "Timeless classics for everyday wear",
-      image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744492224/lapalma.png",
+      image: "/images/products/no-limits.png",
     },
   ]
 

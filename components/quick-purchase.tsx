@@ -15,21 +15,21 @@ import { AnimatePresence } from "framer-motion"
 const popularProducts = [
   {
     id: 1,
-    name: "Classic Black Tee",
-    price: 29.99,
-    image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207231/Chickenleg.png",
-  },
-  {
-    id: 2,
-    name: "White Minimalist",
-    price: 29.99,
-    image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207236/elfumador3.png",
-  },
-  {
-    id: 3,
-    name: "Gray Essential",
+    name: "Pray More Worry Less",
     price: 34.99,
-    image: "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207237/elny.png",
+    image: "/images/products/pray-more-worry-less-flat.png",
+  },
+  {
+    id: 15,
+    name: "Bold Soul",
+    price: 34.99,
+    image: "/images/products/bold-soul.png",
+  },
+  {
+    id: 9,
+    name: "Read Dream Bloom",
+    price: 32.99,
+    image: "/images/products/read-dream-bloom.png",
   },
 ]
 

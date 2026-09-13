@@ -260,7 +260,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop">
+              <Link href="/shop/16">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
                     src="/images/home/dream-loud.png"
@@ -285,7 +285,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop">
+              <Link href="/shop/17">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
                     src="/images/home/inner-force.png"
@@ -310,7 +310,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop">
+              <Link href="/shop/18">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
                     src="/images/home/no-limits.png"
@@ -335,7 +335,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <Link href="/shop">
+              <Link href="/shop/19">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
                     src="/images/home/silent-power.png"
