@@ -668,23 +668,23 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
         {/* Product Images */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-4">
+          <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 mb-5">
             <img
               src={productImages[selectedImage] || "/placeholder.svg"}
               alt={product.name}
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="flex gap-3">
             {productImages.map((image, index) => (
               <button
                 key={index}
-                className={`relative aspect-square overflow-hidden rounded-md ${
-                  selectedImage === index ? "ring-2 ring-black" : ""
+                className={`relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 overflow-hidden bg-gray-50 transition-opacity ${
+                  selectedImage === index ? "ring-1 ring-black" : "opacity-50 hover:opacity-100"
                 }`}
                 onClick={() => setSelectedImage(index)}
               >
@@ -703,48 +703,48 @@ export default function ProductPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          className="md:pt-2"
         >
-          <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-          <div className="flex items-center mb-4">
+          <h1 className="text-2xl md:text-3xl font-normal mb-2">{product.name}</h1>
+          <p className="text-xl font-normal mb-4">{formatPrice(product.price, language)}</p>
+          <div className="flex items-center mb-6">
             <div className="flex items-center">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-4 h-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`}
+                  className={`w-3.5 h-3.5 ${i < Math.floor(product.rating) ? "text-gray-900 fill-gray-900" : "text-gray-300"}`}
                 />
               ))}
             </div>
-            <span className="ml-2 text-sm text-gray-600">
+            <span className="ml-2 text-xs text-gray-500">
               {product.rating} ({product.reviews} {t("product.reviews")})
             </span>
           </div>
-          <p className="text-2xl font-bold mb-6">{formatPrice(product.price, language)}</p>
-          <p className="text-gray-700 mb-6">{product.description}</p>
+          <p className="text-sm text-gray-600 leading-relaxed mb-10">{product.description}</p>
 
           {/* Color Selection */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">{t("product.color")}</h3>
-            <div className="flex space-x-2">
+          <div className="mb-8">
+            <h3 className="text-xs uppercase tracking-wider text-gray-500 mb-3">{t("product.color")}</h3>
+            <div className="flex space-x-3">
               {product.colors.map((color) => {
                 const bgColor = colorMap[color] || color.toLowerCase()
 
                 return (
                   <button
                     key={color}
-                    className={`w-8 h-8 rounded-full border ${
-                      selectedColor === color ? "ring-2 ring-black ring-offset-2" : ""
-                    } ${color === "White" || color === "Cream" ? "border-gray-300" : ""}`}
+                    className={`w-7 h-7 rounded-full border border-gray-300 transition-shadow ${
+                      selectedColor === color ? "ring-1 ring-black ring-offset-2" : ""
+                    }`}
                     style={{ backgroundColor: bgColor }}
                     onClick={() => {
                       setSelectedColor(color)
-                      console.log("Color seleccionado:", color)
                     }}
                     aria-label={color}
                   >
                     {selectedColor === color && (
                       <span
-                        className={`flex items-center justify-center h-full ${
-                          color === "White" || color === "Cream" ? "text-black" : "text-white"
+                        className={`flex items-center justify-center h-full text-xs ${
+                          color === "White" || color === "Cream" || color === "Natural" ? "text-black" : "text-white"
                         }`}
                       >
                         ✓
@@ -754,16 +754,16 @@ export default function ProductPage() {
                 )
               })}
             </div>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-xs text-gray-500 mt-2">
               {t("product.selected")}: {selectedColor}
             </p>
           </div>
 
           {/* Size Selection */}
-          <div className="mb-6">
-            <div className="flex justify-between items-center mb-2">
-              <h3 className="text-sm font-medium">{t("product.size")}</h3>
-              <Link href="/size-guide" className="text-xs text-gray-600 underline">
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-xs uppercase tracking-wider text-gray-500">{t("product.size")}</h3>
+              <Link href="/size-guide" className="text-xs text-gray-500 underline underline-offset-2">
                 {t("product.sizeGuide")}
               </Link>
             </div>
@@ -771,10 +771,10 @@ export default function ProductPage() {
               {product.sizes.map((size) => (
                 <button
                   key={size}
-                  className={`py-2 border rounded-md text-sm font-medium ${
+                  className={`py-2.5 border text-sm font-normal transition-colors ${
                     selectedSize === size
                       ? "bg-black text-white border-black"
-                      : "bg-white text-gray-900 border-gray-200 hover:border-gray-300"
+                      : "bg-white text-gray-900 border-gray-300 hover:border-black"
                   }`}
                   onClick={() => setSelectedSize(size)}
                 >
@@ -782,23 +782,23 @@ export default function ProductPage() {
                 </button>
               ))}
             </div>
-            {!selectedSize && <p className="text-xs text-red-500 mt-1">{t("product.selectSize")}</p>}
+            {!selectedSize && <p className="text-xs text-red-500 mt-2">{t("product.selectSize")}</p>}
           </div>
 
           {/* Quantity */}
-          <div className="mb-6">
-            <h3 className="text-sm font-medium mb-2">{t("product.quantity")}</h3>
-            <div className="flex items-center border rounded-md w-32">
+          <div className="mb-8">
+            <h3 className="text-xs uppercase tracking-wider text-gray-500 mb-3">{t("product.quantity")}</h3>
+            <div className="flex items-center border border-gray-300 w-28">
               <button
-                className="w-10 h-10 flex items-center justify-center border-r"
+                className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-black transition-colors"
                 onClick={() => quantity > 1 && setQuantity(quantity - 1)}
                 aria-label={t("product.decrease")}
               >
                 -
               </button>
-              <span className="flex-1 text-center">{quantity}</span>
+              <span className="flex-1 text-center text-sm">{quantity}</span>
               <button
-                className="w-10 h-10 flex items-center justify-center border-l"
+                className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-black transition-colors"
                 onClick={() => setQuantity(quantity + 1)}
                 aria-label={t("product.increase")}
               >
@@ -808,54 +808,61 @@ export default function ProductPage() {
           </div>
 
           {/* Add to Cart */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <Button className="flex-1" onClick={handleAddToCart}>
+          <div className="mb-10">
+            <Button className="w-full h-12 rounded-none text-sm tracking-wide" onClick={handleAddToCart}>
               {t("product.addToCart")}
             </Button>
-            <Button variant="outline" className="flex items-center justify-center gap-2">
-              <Heart className="w-4 h-4" />
-              {t("product.wishlist")}
-            </Button>
-            <Button variant="outline" size="icon">
-              <Share2 className="w-4 h-4" />
-              <span className="sr-only">{t("product.share")}</span>
-            </Button>
+            <div className="flex items-center gap-6 mt-4">
+              <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-black transition-colors">
+                <Heart className="w-4 h-4" />
+                {t("product.wishlist")}
+              </button>
+              <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-black transition-colors">
+                <Share2 className="w-4 h-4" />
+                {t("product.share")}
+              </button>
+            </div>
           </div>
 
           {/* Shipping Info */}
-          <div className="border-t pt-6 space-y-4">
+          <div className="border-t border-gray-200 pt-6 space-y-3">
             <div className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-gray-600 mt-0.5" />
-              <div>
-                <p className="font-medium">{t("product.freeShipping")}</p>
-              </div>
+              <Truck className="w-4 h-4 text-gray-400 mt-0.5" />
+              <p className="text-sm text-gray-600">{t("product.freeShipping")}</p>
             </div>
             <div className="flex items-start gap-3">
-              <RefreshCw className="w-5 h-5 text-gray-600 mt-0.5" />
-              <div>
-                <p className="font-medium">{t("product.easyReturns")}</p>
-              </div>
+              <RefreshCw className="w-4 h-4 text-gray-400 mt-0.5" />
+              <p className="text-sm text-gray-600">{t("product.easyReturns")}</p>
             </div>
           </div>
         </motion.div>
       </div>
 
       {/* Product Tabs */}
-      <div className="mt-16">
+      <div className="mt-20 max-w-3xl">
         <Tabs defaultValue="description">
-          <TabsList className="w-full max-w-md mx-auto">
-            <TabsTrigger value="description" className="flex-1">
+          <TabsList className="w-full justify-start gap-8 bg-transparent p-0 h-auto border-b border-gray-200 rounded-none">
+            <TabsTrigger
+              value="description"
+              className="rounded-none px-0 pb-3 text-xs uppercase tracking-wider font-normal text-gray-500 data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:text-black data-[state=active]:border-b data-[state=active]:border-black"
+            >
               {t("product.description")}
             </TabsTrigger>
-            <TabsTrigger value="details" className="flex-1">
+            <TabsTrigger
+              value="details"
+              className="rounded-none px-0 pb-3 text-xs uppercase tracking-wider font-normal text-gray-500 data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:text-black data-[state=active]:border-b data-[state=active]:border-black"
+            >
               {t("product.details")}
             </TabsTrigger>
-            <TabsTrigger value="reviews" className="flex-1">
+            <TabsTrigger
+              value="reviews"
+              className="rounded-none px-0 pb-3 text-xs uppercase tracking-wider font-normal text-gray-500 data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:text-black data-[state=active]:border-b data-[state=active]:border-black"
+            >
               {t("product.reviews_tab")}
             </TabsTrigger>
           </TabsList>
           <TabsContent value="description" className="mt-6">
-            <div className="prose max-w-none">
+            <div className="text-sm text-gray-600 leading-relaxed space-y-4">
               <p>{product.description}</p>
               <p>
                 Our t-shirts are designed with comfort and style in mind. Each piece is crafted from premium materials
@@ -865,24 +872,20 @@ export default function ProductPage() {
             </div>
           </TabsContent>
           <TabsContent value="details" className="mt-6">
-            <div className="prose max-w-none">
-              <ul>
-                <li>100% organic cotton</li>
-                <li>Medium weight fabric (180 gsm)</li>
-                <li>Relaxed fit</li>
-                <li>Pre-shrunk</li>
-                <li>Machine wash cold, tumble dry low</li>
-                <li>Made ethically in Portugal</li>
-              </ul>
-            </div>
+            <ul className="text-sm text-gray-600 leading-relaxed space-y-1.5">
+              <li>100% organic cotton</li>
+              <li>Medium weight fabric (180 gsm)</li>
+              <li>Relaxed fit</li>
+              <li>Pre-shrunk</li>
+              <li>Machine wash cold, tumble dry low</li>
+              <li>Made ethically in Portugal</li>
+            </ul>
           </TabsContent>
           <TabsContent value="reviews" className="mt-6">
-            <div className="prose max-w-none">
-              <p>
-                This product has received {product.reviews} reviews with an average rating of {product.rating} out of 5
-                stars.
-              </p>
-            </div>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              This product has received {product.reviews} reviews with an average rating of {product.rating} out of 5
+              stars.
+            </p>
           </TabsContent>
         </Tabs>
       </div>
@@ -890,20 +893,20 @@ export default function ProductPage() {
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <div className="mt-24">
-          <h2 className="text-2xl font-bold mb-8">{t("product.youMayAlsoLike")}</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <h2 className="text-lg font-normal mb-8">{t("product.youMayAlsoLike")}</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {relatedProducts.map((relatedProduct) => (
               <Link key={relatedProduct.id} href={`/shop/${relatedProduct.id}`}>
                 <div className="group">
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-3">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 mb-3">
                     <img
                       src={relatedProduct.images[0] || "/placeholder.svg"}
                       alt={relatedProduct.name}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
-                  <h3 className="font-medium group-hover:underline">{relatedProduct.name}</h3>
-                  <p className="text-gray-600">{formatPrice(relatedProduct.price, language)}</p>
+                  <h3 className="text-sm font-normal group-hover:underline">{relatedProduct.name}</h3>
+                  <p className="text-sm text-gray-500">{formatPrice(relatedProduct.price, language)}</p>
                 </div>
               </Link>
             ))}
