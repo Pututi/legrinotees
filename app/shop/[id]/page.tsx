@@ -1,14 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useCart } from "@/context/cart-context"
 import { useLanguage } from "@/context/language-context"
-import { Star, Heart, Share2, Truck, RefreshCw } from "lucide-react"
+import { Star, Heart, Share2, Truck, RefreshCw, ZoomIn, X } from "lucide-react"
 import { formatPrice } from "@/lib/currency"
 
 // Define product interface
@@ -592,6 +592,17 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
   const [relatedProducts, setRelatedProducts] = useState([])
   const [productImages, setProductImages] = useState([])
+  const [isZoomed, setIsZoomed] = useState(false)
+
+  // Cerrar la vista ampliada con la tecla Escape
+  useEffect(() => {
+    if (!isZoomed) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsZoomed(false)
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [isZoomed])
 
   useEffect(() => {
     // Obtener el ID del producto de los parámetros de la URL
@@ -672,13 +683,21 @@ export default function ProductPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
         {/* Product Images */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 mb-5">
+          <button
+            type="button"
+            className="relative aspect-[3/4] overflow-hidden bg-gray-50 mb-5 w-full cursor-zoom-in group"
+            onClick={() => setIsZoomed(true)}
+            aria-label="Bild vergrößern"
+          >
             <img
               src={productImages[selectedImage] || "/placeholder.svg"}
               alt={product.name}
               className="w-full h-full object-cover"
             />
-          </div>
+            <span className="absolute bottom-3 right-3 flex items-center justify-center w-9 h-9 rounded-full bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity">
+              <ZoomIn className="w-4 h-4 text-black" />
+            </span>
+          </button>
           <div className="flex gap-3">
             {productImages.map((image, index) => (
               <button
@@ -913,6 +932,44 @@ export default function ProductPage() {
           </div>
         </div>
       )}
+
+      {/* Zoomed image lightbox */}
+      <AnimatePresence>
+        {isZoomed && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setIsZoomed(false)}
+          >
+            <button
+              type="button"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              onClick={() => setIsZoomed(false)}
+              aria-label="Schließen"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <motion.div
+              className="relative w-full max-w-lg h-full max-h-[90vh] overflow-hidden"
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={productImages[selectedImage] || "/placeholder.svg"}
+                alt={product.name}
+                className="w-full h-full object-cover"
+                style={{ objectPosition: "50% 32%" }}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
