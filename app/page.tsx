@@ -179,11 +179,11 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="overflow-hidden rounded-lg aspect-[3/4]">
+              <div className="overflow-hidden rounded-lg aspect-[3/4] bg-gray-50">
                 <img
-                  src="/images/home/beach-please.png"
-                  alt="Beach Please t-shirt"
-                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                  src="/images/home/bold-soul.png"
+                  alt="Bold Soul t-shirt"
+                  className="w-full h-full object-contain transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
             </motion.div>
@@ -193,11 +193,11 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="overflow-hidden rounded-lg aspect-[3/4] bg-gray-50">
+              <div className="overflow-hidden rounded-lg aspect-[3/4]">
                 <img
-                  src="/images/home/bold-soul.png"
-                  alt="Bold Soul t-shirt"
-                  className="w-full h-full object-contain transform hover:scale-105 transition-transform duration-700"
+                  src="/images/home/beach-please.png"
+                  alt="Beach Please t-shirt"
+                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                 />
               </div>
             </motion.div>
