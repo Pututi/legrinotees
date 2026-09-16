@@ -69,9 +69,9 @@ export default function Home() {
   }
 
   // Actualizar las URLs de Cloudinary para usar imágenes de alta calidad
-  const cloudinaryHeroUrl = "/images/home/chosen-loved-redeemed.png"
-  const cloudinaryElbocosaUrl = "/images/home/strength-and-dignity.png"
-  const cloudinaryAmorososUrl = "/images/home/wildflower-warrior.png"
+  const cloudinaryHeroUrl = "/images/home/chosen-loved-redeemed.webp"
+  const cloudinaryElbocosaUrl = "/images/home/strength-and-dignity.webp"
+  const cloudinaryAmorososUrl = "/images/home/wildflower-warrior.webp"
 
   // Mock language state for demonstration purposes
   const [language, setLanguage] = useState("de")
@@ -175,7 +175,7 @@ export default function Home() {
             >
               <div className="overflow-hidden rounded-lg aspect-[3/4]">
                 <img
-                  src="/images/home/moth-i-came-i-saw.png"
+                  src="/images/home/moth-i-came-i-saw.webp"
                   alt="I Came I Saw I Went Home t-shirt"
                   className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                 />
@@ -189,7 +189,7 @@ export default function Home() {
             >
               <div className="overflow-hidden rounded-lg aspect-[3/4] bg-gray-50">
                 <img
-                  src="/images/home/bold-soul.png"
+                  src="/images/home/bold-soul.webp"
                   alt="Bold Soul t-shirt"
                   className="w-full h-full object-contain transform hover:scale-105 transition-transform duration-700"
                 />
@@ -203,7 +203,7 @@ export default function Home() {
             >
               <div className="overflow-hidden rounded-lg aspect-[3/4]">
                 <img
-                  src="/images/home/beach-please.png"
+                  src="/images/home/beach-please.webp"
                   alt="Beach Please t-shirt"
                   className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                 />
@@ -233,16 +233,16 @@ export default function Home() {
 
       {/* Split vignette effect */}
       <SplitVignette
-        leftImage="/images/home/rhythm.png"
-        rightImage="/images/home/happily-unavailable.png"
+        leftImage="/images/home/rhythm.webp"
+        rightImage="/images/home/happily-unavailable.webp"
         leftText="Urban"
         rightText="Casual"
       />
 
       {/* Split image animation */}
       <SplitImageAnimation
-        image1="/images/home/world-in-his-hands.png"
-        image2="/images/home/read-dream-bloom.png"
+        image1="/images/home/world-in-his-hands.webp"
+        image2="/images/home/read-dream-bloom.webp"
       />
 
       {/* New Arrivals Section */}
@@ -270,7 +270,7 @@ export default function Home() {
               <Link href="/shop/16">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
-                    src="/images/home/dream-loud.png"
+                    src="/images/home/dream-loud.webp"
                     alt="Dream Loud"
                     className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
@@ -295,7 +295,7 @@ export default function Home() {
               <Link href="/shop/17">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
-                    src="/images/home/inner-force.png"
+                    src="/images/home/inner-force.webp"
                     alt="Inner Force"
                     className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
@@ -320,7 +320,7 @@ export default function Home() {
               <Link href="/shop/18">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
-                    src="/images/home/no-limits.png"
+                    src="/images/home/no-limits.webp"
                     alt="No Limits"
                     className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
@@ -345,7 +345,7 @@ export default function Home() {
               <Link href="/shop/19">
                 <div className="overflow-hidden rounded-lg mb-4">
                   <img
-                    src="/images/home/silent-power.png"
+                    src="/images/home/silent-power.webp"
                     alt="Silent Power"
                     className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {

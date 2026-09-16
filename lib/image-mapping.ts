@@ -9,14 +9,14 @@ const imageMapping: Record<string, string> = {
   "/images/amorosos.jpg": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210953/amorosos.jpg",
 
   // Nuevas imágenes de productos
-  "/images/products/elactracto2.png": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207237/elactracto2.png",
-  "/images/products/elny.png": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207237/elny.png",
-  "/images/products/elfumador.png": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207239/elfumador.png",
-  "/images/products/elfumador2.png": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207235/elfumador2.png",
-  "/images/products/elfumador3.png": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207236/elfumador3.png",
-  "/images/products/ellg.png": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207236/ellg.png",
-  "/images/products/labelleza.png": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210993/labelleza.png",
-  "/images/products/lamariposa2.png": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210993/lamariposa2.png",
+  "/images/products/elactracto2.webp": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207237/elactracto2.png",
+  "/images/products/elny.webp": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207237/elny.png",
+  "/images/products/elfumador.webp": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207239/elfumador.png",
+  "/images/products/elfumador2.webp": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207235/elfumador2.png",
+  "/images/products/elfumador3.webp": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207236/elfumador3.png",
+  "/images/products/ellg.webp": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744207236/ellg.png",
+  "/images/products/labelleza.webp": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210993/labelleza.png",
+  "/images/products/lamariposa2.webp": "https://res.cloudinary.com/dnic69xtm/image/upload/v1744210993/lamariposa2.png",
 
   // Productos existentes
   "/images/products/black-tee.jpg": "/images/products/black-tee.jpg", // Usar rutas locales por ahora
@@ -25,11 +25,11 @@ const imageMapping: Record<string, string> = {
   "/images/products/navy-tee.jpg": "/images/products/navy-tee.jpg",
   "/images/products/pink-tee.jpg": "/images/products/pink-tee.jpg",
   "/images/products/green-tee.jpg": "/images/products/green-tee.jpg",
-  "/images/products/sostenibileza-tee.png": "/images/products/sostenibileza-tee.png",
-  "/images/products/romanticas-tee.png": "/images/products/romanticas-tee.png",
-  "/images/products/mariposa-tee.png": "/images/products/mariposa-tee.png",
-  "/images/products/mariposa-tee-2.png": "/images/products/mariposa-tee-2.png",
-  "/images/products/mariposa-back-tee.png": "/images/products/mariposa-back-tee.png",
+  "/images/products/sostenibileza-tee.webp": "/images/products/sostenibileza-tee.webp",
+  "/images/products/romanticas-tee.webp": "/images/products/romanticas-tee.webp",
+  "/images/products/mariposa-tee.webp": "/images/products/mariposa-tee.webp",
+  "/images/products/mariposa-tee-2.webp": "/images/products/mariposa-tee-2.webp",
+  "/images/products/mariposa-back-tee.webp": "/images/products/mariposa-back-tee.webp",
 
   // Otras imágenes de la página principal
   "/images/elbarbudo.jpg": "/images/elbarbudo.jpg",

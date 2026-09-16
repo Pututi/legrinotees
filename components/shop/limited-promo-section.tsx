@@ -6,7 +6,7 @@ export default function LimitedPromoSection() {
     <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen mb-16">
       <Link href="/shop?category=limited" className="relative block overflow-hidden group">
         <img
-          src="/images/home/limited-promo-banner.png"
+          src="/images/home/limited-promo-banner.webp"
           alt="Limitierte Edition entdecken"
           className="w-full h-auto transform transition-transform duration-700 group-hover:scale-105"
         />
