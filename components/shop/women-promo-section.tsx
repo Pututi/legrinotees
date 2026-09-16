@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export default function WomenPromoSection() {
   return (
-    <div className="w-full mb-16">
+    <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen mb-16">
       <Link href="/shop?category=women" className="relative block overflow-hidden group">
         <img
           src="/images/home/women-promo-banner.png"
