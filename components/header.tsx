@@ -7,10 +7,15 @@ import { Menu, X } from "lucide-react"
 import CartIcon from "@/components/cart/cart-icon"
 import UserMenu from "@/components/user-menu"
 import { useLanguage } from "@/context/language-context"
+import { useHero } from "@/context/hero-context"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const { t } = useLanguage()
+  const { hasHero } = useHero()
+
+  const isTransparent = hasHero && !isScrolled
 
   // Cerrar el menú con la tecla Escape, y bloquear el scroll del fondo mientras está abierto
   useEffect(() => {
@@ -26,6 +31,18 @@ export default function Header() {
     }
   }, [isMenuOpen])
 
+  // Mostrar el header sólido en cuanto se hace scroll, en páginas con hero
+  useEffect(() => {
+    if (!hasHero) {
+      setIsScrolled(false)
+      return
+    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 40)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [hasHero])
+
   const navLinks = [
     { href: "/", label: t("nav.home") },
     { href: "/shop", label: t("nav.shop") },
@@ -35,19 +52,29 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+          isTransparent ? "bg-transparent" : "bg-white/90 backdrop-blur-md shadow-sm"
+        }`}
+      >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-3 items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center flex-shrink-0 justify-self-start">
-              <div className="text-base sm:text-xl font-bold whitespace-nowrap hover:text-gray-700 transition-colors duration-300">
+              <div
+                className={`text-base sm:text-xl font-bold whitespace-nowrap transition-colors duration-300 ${
+                  isTransparent ? "text-white hover:text-white/80" : "hover:text-gray-700"
+                }`}
+              >
                 LEGRINO TEES
               </div>
             </Link>
 
             {/* Hamburger menu button, centrado */}
             <button
-              className="justify-self-center p-2 rounded-full hover:bg-gray-100 transition-colors"
+              className={`justify-self-center p-2 rounded-full transition-colors duration-300 ${
+                isTransparent ? "text-white hover:bg-white/10" : "hover:bg-gray-100"
+              }`}
               onClick={() => setIsMenuOpen(true)}
               aria-label="Menü öffnen"
             >
@@ -55,7 +82,11 @@ export default function Header() {
             </button>
 
             {/* Right side icons */}
-            <div className="flex items-center justify-end space-x-1 sm:space-x-2">
+            <div
+              className={`flex items-center justify-end space-x-1 sm:space-x-2 transition-colors duration-300 ${
+                isTransparent ? "text-white" : ""
+              }`}
+            >
               <div className="hidden sm:block">
                 <UserMenu />
               </div>

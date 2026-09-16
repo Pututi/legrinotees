@@ -10,12 +10,27 @@ import { CartProvider } from "@/context/cart-context"
 import { UserProvider } from "@/context/user-context"
 import { LanguageProvider } from "@/context/language-context"
 import { CookieConsentProvider } from "@/context/cookie-consent-context"
+import { HeroProvider, useHero } from "@/context/hero-context"
 import CartSidebar from "@/components/cart/cart-sidebar"
 import CookieConsentBanner from "@/components/cookie-consent-banner"
 import QuickPurchase from "@/components/quick-purchase"
 import { useEffect, useState } from "react"
 
 const inter = Inter({ subsets: ["latin"] })
+
+function LayoutBody({ children }: { children: React.ReactNode }) {
+  const { hasHero } = useHero()
+  return (
+    <>
+      <Header />
+      <main className={hasHero ? "" : "pt-16"}>{children}</main>
+      <Footer />
+      <CartSidebar />
+      <QuickPurchase />
+      <CookieConsentBanner />
+    </>
+  )
+}
 
 export default function RootClient({
   children,
@@ -46,12 +61,9 @@ export default function RootClient({
             <UserProvider>
               <CartProvider>
                 <CookieConsentProvider>
-                  <Header />
-                  <main className="pt-16">{children}</main>
-                  <Footer />
-                  <CartSidebar />
-                  <QuickPurchase />
-                  <CookieConsentBanner />
+                  <HeroProvider>
+                    <LayoutBody>{children}</LayoutBody>
+                  </HeroProvider>
                 </CookieConsentProvider>
               </CartProvider>
             </UserProvider>

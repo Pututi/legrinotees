@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import SplitVignette from "@/components/split-vignette"
 import SplitImageAnimation from "@/components/split-image-animation"
+import { useHero } from "@/context/hero-context"
 
 // Definir interfaces para los props de los componentes
 interface ParallaxSectionProps {
@@ -22,11 +23,18 @@ export default function Home() {
   // Estado para controlar si el componente está montado
   const [isMounted, setIsMounted] = useState(false)
   const ref = useRef(null)
+  const { setHasHero } = useHero()
 
   // Usar useEffect para actualizar el estado de montaje
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  // La home tiene un hero a pantalla completa: el header empieza transparente
+  useEffect(() => {
+    setHasHero(true)
+    return () => setHasHero(false)
+  }, [setHasHero])
 
   // Solo crear efectos de scroll cuando el componente está montado
   const scrollInfo = useScroll({

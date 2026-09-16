@@ -18,6 +18,7 @@ import MenNewArrivals from "@/components/shop/men-new-arrivals"
 import WomenFeaturedCollections from "@/components/shop/women-featured-collections"
 import WomenNewArrivals from "@/components/shop/women-new-arrivals"
 import LimitedPromoSection from "@/components/shop/limited-promo-section"
+import { useHero } from "@/context/hero-context"
 
 export default function Shop() {
   const searchParams = useSearchParams()
@@ -26,6 +27,7 @@ export default function Shop() {
   const { addItem } = useCart()
 
   const { t, language } = useLanguage()
+  const { setHasHero } = useHero()
 
   // Set active category based on URL parameter
   useEffect(() => {
@@ -33,6 +35,12 @@ export default function Shop() {
       setActiveCategory(categoryParam)
     }
   }, [categoryParam])
+
+  // Las pestañas Herren/Damen/Limitierte Edition tienen banner: el header empieza transparente
+  useEffect(() => {
+    setHasHero(activeCategory !== "all")
+    return () => setHasHero(false)
+  }, [activeCategory, setHasHero])
 
   const filteredProducts =
     activeCategory === "all" ? products : products.filter((product) => product.category === activeCategory)
@@ -49,55 +57,57 @@ export default function Shop() {
   }
 
   return (
-    <div className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {t("shop.title") || "Shop Our Collection"}
-        </motion.h1>
+    <div>
+      {/* Banner a pantalla completa, pegado arriba, según la categoría */}
+      {activeCategory === "men" && <MenPromoSection />}
+      {activeCategory === "women" && <WomenPromoSection />}
+      {activeCategory === "limited" && <LimitedPromoSection />}
 
-        <Tabs value={activeCategory} className="mb-12">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-4">
-            <TabsTrigger value="all" onClick={() => setActiveCategory("all")}>
-              {t("shop.all") || "All"}
-            </TabsTrigger>
-            <TabsTrigger value="men" onClick={() => setActiveCategory("men")}>
-              {t("shop.men") || "Men"}
-            </TabsTrigger>
-            <TabsTrigger value="women" onClick={() => setActiveCategory("women")}>
-              {t("shop.women") || "Women"}
-            </TabsTrigger>
-            <TabsTrigger value="limited" onClick={() => setActiveCategory("limited")}>
-              {t("shop.limited") || "Limited"}
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+      <div className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {t("shop.title") || "Shop Our Collection"}
+          </motion.h1>
 
-        {/* Secciones promocionales y adicionales según la categoría */}
-        {activeCategory === "men" && (
-          <>
-            <MenPromoSection />
-            <MenFeaturedCollections />
-            <MenNewArrivals />
-          </>
-        )}
+          <Tabs value={activeCategory} className="mb-12">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-4">
+              <TabsTrigger value="all" onClick={() => setActiveCategory("all")}>
+                {t("shop.all") || "All"}
+              </TabsTrigger>
+              <TabsTrigger value="men" onClick={() => setActiveCategory("men")}>
+                {t("shop.men") || "Men"}
+              </TabsTrigger>
+              <TabsTrigger value="women" onClick={() => setActiveCategory("women")}>
+                {t("shop.women") || "Women"}
+              </TabsTrigger>
+              <TabsTrigger value="limited" onClick={() => setActiveCategory("limited")}>
+                {t("shop.limited") || "Limited"}
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
 
-        {activeCategory === "women" && (
-          <>
-            <WomenPromoSection />
-            <WomenFeaturedCollections />
-            <WomenNewArrivals />
-          </>
-        )}
+          {/* Secciones adicionales según la categoría */}
+          {activeCategory === "men" && (
+            <>
+              <MenFeaturedCollections />
+              <MenNewArrivals />
+            </>
+          )}
 
-        {activeCategory === "limited" && <LimitedPromoSection />}
+          {activeCategory === "women" && (
+            <>
+              <WomenFeaturedCollections />
+              <WomenNewArrivals />
+            </>
+          )}
 
-        {/* Productos filtrados */}
-        <div className="mt-16">
+          {/* Productos filtrados */}
+          <div className="mt-16">
           <motion.h2
             className="text-3xl font-bold mb-8"
             initial={{ opacity: 0, y: 20 }}
@@ -131,6 +141,7 @@ export default function Shop() {
               <ProductCard key={product.id} product={product} onQuickAdd={handleQuickAdd} language={language} />
             ))}
           </motion.div>
+          </div>
         </div>
       </div>
     </div>
