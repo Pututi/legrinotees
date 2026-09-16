@@ -18,7 +18,6 @@ import MenNewArrivals from "@/components/shop/men-new-arrivals"
 import WomenFeaturedCollections from "@/components/shop/women-featured-collections"
 import WomenNewArrivals from "@/components/shop/women-new-arrivals"
 import LimitedPromoSection from "@/components/shop/limited-promo-section"
-import OutfitBuilder from "@/components/shop/outfit-builder"
 
 export default function Shop() {
   const searchParams = useSearchParams()
@@ -133,10 +132,6 @@ export default function Shop() {
             ))}
           </motion.div>
         </div>
-
-        {/* Mostrar las secciones de outfits según la categoría */}
-        {activeCategory === "women" && <OutfitBuilder category="women" />}
-        {activeCategory === "men" && <OutfitBuilder category="men" />}
       </div>
     </div>
   )
