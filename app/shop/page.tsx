@@ -17,6 +17,7 @@ import MenFeaturedCollections from "@/components/shop/men-featured-collections"
 import MenNewArrivals from "@/components/shop/men-new-arrivals"
 import WomenFeaturedCollections from "@/components/shop/women-featured-collections"
 import WomenNewArrivals from "@/components/shop/women-new-arrivals"
+import LimitedPromoSection from "@/components/shop/limited-promo-section"
 import OutfitBuilder from "@/components/shop/outfit-builder"
 
 export default function Shop() {
@@ -93,6 +94,8 @@ export default function Shop() {
             <WomenNewArrivals />
           </>
         )}
+
+        {activeCategory === "limited" && <LimitedPromoSection />}
 
         {/* Productos filtrados */}
         <div className="mt-16">
