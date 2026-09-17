@@ -18,6 +18,7 @@ import MenNewArrivals from "@/components/shop/men-new-arrivals"
 import WomenFeaturedCollections from "@/components/shop/women-featured-collections"
 import WomenNewArrivals from "@/components/shop/women-new-arrivals"
 import LimitedPromoSection from "@/components/shop/limited-promo-section"
+import AllPromoSection from "@/components/shop/all-promo-section"
 import { useHero } from "@/context/hero-context"
 
 export default function Shop() {
@@ -36,11 +37,11 @@ export default function Shop() {
     }
   }, [categoryParam])
 
-  // Las pestañas Herren/Damen/Limitierte Edition tienen banner: el header empieza transparente
+  // Todas las pestañas tienen banner: el header empieza transparente
   useEffect(() => {
-    setHasHero(activeCategory !== "all")
+    setHasHero(true)
     return () => setHasHero(false)
-  }, [activeCategory, setHasHero])
+  }, [setHasHero])
 
   const filteredProducts =
     activeCategory === "all" ? products : products.filter((product) => product.category === activeCategory)
@@ -59,6 +60,7 @@ export default function Shop() {
   return (
     <div>
       {/* Banner a pantalla completa, pegado arriba, según la categoría */}
+      {activeCategory === "all" && <AllPromoSection />}
       {activeCategory === "men" && <MenPromoSection />}
       {activeCategory === "women" && <WomenPromoSection />}
       {activeCategory === "limited" && <LimitedPromoSection />}
