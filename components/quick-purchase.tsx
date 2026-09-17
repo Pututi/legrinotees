@@ -17,19 +17,19 @@ const popularProducts = [
     id: 1,
     name: "Pray More Worry Less",
     price: 34.99,
-    image: "/images/products/pray-more-worry-less-flat.png",
+    image: "/images/products/pray-more-worry-less-flat.webp",
   },
   {
     id: 15,
     name: "Bold Soul",
     price: 34.99,
-    image: "/images/products/bold-soul.png",
+    image: "/images/products/bold-soul.webp",
   },
   {
     id: 9,
     name: "Read Dream Bloom",
     price: 32.99,
-    image: "/images/products/read-dream-bloom.png",
+    image: "/images/products/read-dream-bloom.webp",
   },
 ]
 

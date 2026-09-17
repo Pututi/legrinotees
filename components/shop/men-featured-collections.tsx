@@ -13,7 +13,7 @@ export default function MenFeaturedCollections() {
         language === "de"
           ? "Unsere urbane Kollektion für den modernen Mann"
           : "Our urban collection for the modern man",
-      image: "/images/products/bold-soul.png",
+      image: "/images/products/bold-soul.webp",
     },
     {
       id: 2,
@@ -22,13 +22,13 @@ export default function MenFeaturedCollections() {
         language === "de"
           ? "Ausdrucksstarke Designs für einzigartige Persönlichkeiten"
           : "Expressive designs for unique personalities",
-      image: "/images/products/inner-force.png",
+      image: "/images/products/inner-force.webp",
     },
     {
       id: 3,
       name: language === "de" ? "Essenzielle Basics" : "Essential Basics",
       description: language === "de" ? "Zeitlose Klassiker für jeden Tag" : "Timeless classics for everyday wear",
-      image: "/images/products/no-limits.png",
+      image: "/images/products/no-limits.webp",
     },
   ]
 
