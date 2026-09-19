@@ -400,4 +400,28 @@ export const products = [
     category: "women",
     gender: "women",
   },
+  {
+    id: 51,
+    name: "Soft Rebellion",
+    price: 36.99,
+    image: "/images/products/soft-rebellion.webp",
+    category: "limited",
+    gender: "unisex",
+  },
+  {
+    id: 52,
+    name: "Midnight Theory",
+    price: 36.99,
+    image: "/images/products/midnight-theory.webp",
+    category: "limited",
+    gender: "unisex",
+  },
+  {
+    id: 53,
+    name: "Unwritten",
+    price: 36.99,
+    image: "/images/products/unwritten.webp",
+    category: "limited",
+    gender: "unisex",
+  },
 ]

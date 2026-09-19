@@ -802,6 +802,51 @@ const products = [
     rating: 0,
     reviews: 0,
   },
+  {
+    id: 51,
+    name: "Soft Rebellion",
+    price: 36.99,
+    description: "An oversized pink tee with the statement 'Soft Rebellion — gentle is not fragile'.",
+    sizes: ["One Size"],
+    colors: ["Pink"],
+    colorImages: {
+      Pink: "/images/products/soft-rebellion.webp",
+    },
+    images: ["/images/products/soft-rebellion.webp"],
+    category: "limited",
+    rating: 0,
+    reviews: 0,
+  },
+  {
+    id: 52,
+    name: "Midnight Theory",
+    price: 36.99,
+    description: "An oversized navy tee with the vertical statement 'Midnight Theory — ideas live after dark'.",
+    sizes: ["One Size"],
+    colors: ["Navy"],
+    colorImages: {
+      Navy: "/images/products/midnight-theory.webp",
+    },
+    images: ["/images/products/midnight-theory.webp"],
+    category: "limited",
+    rating: 0,
+    reviews: 0,
+  },
+  {
+    id: 53,
+    name: "Unwritten",
+    price: 36.99,
+    description: "An oversized white tee with the statement 'Unwritten — the future has no template'.",
+    sizes: ["One Size"],
+    colors: ["White"],
+    colorImages: {
+      White: "/images/products/unwritten.webp",
+    },
+    images: ["/images/products/unwritten.webp"],
+    category: "limited",
+    rating: 0,
+    reviews: 0,
+  },
 ]
 
 export default function ProductPage() {
