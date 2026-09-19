@@ -582,7 +582,7 @@ const products = [
     name: "Unbound Spirit",
     price: 34.99,
     description: "An oversized white tee with the statement 'Unbound Spirit — beyond limits / beyond fear'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["White"],
     colorImages: {
       White: "/images/products/unbound-spirit.webp",
@@ -597,7 +597,7 @@ const products = [
     name: "Awaken Within",
     price: 34.99,
     description: "An oversized black tee with the statement 'Awaken Within — wake the fire within'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Black"],
     colorImages: {
       Black: "/images/products/awaken-within.webp",
@@ -612,7 +612,7 @@ const products = [
     name: "Unshaken Mind",
     price: 34.99,
     description: "An oversized beige tee with the statement 'Unshaken Mind — pressure cannot break you'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Sand"],
     colorImages: {
       Sand: "/images/products/unshaken-mind.webp",
@@ -627,7 +627,7 @@ const products = [
     name: "Ascend Higher",
     price: 34.99,
     description: "An oversized white tee with the statement 'Ascend Higher — rise beyond the ordinary'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["White"],
     colorImages: {
       White: "/images/products/ascend-higher.webp",
@@ -642,7 +642,7 @@ const products = [
     name: "Reinvent Yourself",
     price: 34.99,
     description: "An oversized black tee with the statement 'Reinvent Yourself — destroy the old / create the new'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Black"],
     colorImages: {
       Black: "/images/products/reinvent-yourself.webp",
@@ -657,7 +657,7 @@ const products = [
     name: "Revolution / Evolution",
     price: 34.99,
     description: "An oversized black tee with the statement 'Revolution / Evolution — become what comes next'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Black"],
     colorImages: {
       Black: "/images/products/revolution-evolution.webp",
@@ -672,7 +672,7 @@ const products = [
     name: "Inner Revolution",
     price: 34.99,
     description: "An oversized off-white tee with the vertical statement 'Inner Revolution — break the pattern / create your path'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Natural"],
     colorImages: {
       Natural: "/images/products/inner-revolution.webp",
@@ -687,7 +687,7 @@ const products = [
     name: "Quiet Revolution",
     price: 34.99,
     description: "An oversized olive tee with the statement 'Quiet Revolution — no noise / just movement'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Olive"],
     colorImages: {
       Olive: "/images/products/quiet-revolution.webp",
@@ -702,7 +702,7 @@ const products = [
     name: "Bloom Within",
     price: 34.99,
     description: "An oversized natural tee with the statement 'Bloom Within — soft growth / quiet strength'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Natural"],
     colorImages: {
       Natural: "/images/products/bloom-within.webp",
@@ -717,7 +717,7 @@ const products = [
     name: "Pure Form",
     price: 34.99,
     description: "An oversized black tee with the statement 'Pure Form — shape / soul / silence'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Black"],
     colorImages: {
       Black: "/images/products/pure-form.webp",
@@ -732,7 +732,7 @@ const products = [
     name: "She Dances",
     price: 34.99,
     description: "An oversized white tee with the statement 'She Dances — rhythm / grace / soul'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["White"],
     colorImages: {
       White: "/images/products/she-dances.webp",
@@ -747,7 +747,7 @@ const products = [
     name: "Soul Bloom",
     price: 34.99,
     description: "An oversized natural tee with the statement 'Soul Bloom — soft growth / inner calm'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Natural"],
     colorImages: {
       Natural: "/images/products/soul-bloom.webp",
@@ -762,7 +762,7 @@ const products = [
     name: "Wild Grace",
     price: 34.99,
     description: "An oversized black tee with the statement 'Wild Grace — calm / bold / free'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Black"],
     colorImages: {
       Black: "/images/products/wild-grace.webp",
@@ -777,7 +777,7 @@ const products = [
     name: "She Moves",
     price: 34.99,
     description: "An oversized sage tee with the statement 'She Moves — grace in motion'.",
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["One Size"],
     colors: ["Sage"],
     colorImages: {
       Sage: "/images/products/she-moves.webp",
