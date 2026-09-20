@@ -68,7 +68,7 @@ export default function FAQPage() {
     {
       question: "Gibt es kostenlosen Versand?",
       answer:
-        "Ja, wir bieten kostenlosen Standardversand für alle Bestellungen über 100 € an. Bestellungen unter 100 € haben eine Pauschalversandgebühr von 5,99 €.",
+        "Ja, wir bieten kostenlosen Standardversand für alle Bestellungen über 50 € an. Bestellungen unter 50 € haben eine Pauschalversandgebühr von 5,99 €.",
     },
     {
       question: "Wie kann ich meine Sendung verfolgen?",

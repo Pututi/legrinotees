@@ -16,9 +16,13 @@ export default function CheckoutPage() {
   const [step, setStep] = useState(1)
   const [orderComplete, setOrderComplete] = useState(false)
 
-  // Shipping cost calculation
-  const shippingCost = subtotal > 100 ? 0 : 10
-  const tax = subtotal * 0.08 // 8% tax
+  // Envío gratis a partir de 50€ (umbral típico para tiendas de streetwear
+  // pequeñas en Alemania, y el mismo que ya se anuncia en el footer).
+  // 5,99€ es el costo ya anunciado en /shipping y /faq.
+  const FREE_SHIPPING_THRESHOLD = 50
+  const SHIPPING_COST = 5.99
+  const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST
+  const tax = subtotal * 0.08 // 8% tax — placeholder, no confirmado (ver nota para Gustavo)
   const total = subtotal + shippingCost + tax
 
   const handleSubmitOrder = (e) => {
@@ -376,7 +380,7 @@ export default function CheckoutPage() {
 
               {shippingCost > 0 && (
                 <div className="text-sm text-gray-500 mt-2">
-                  Noch {formatPrice(100 - subtotal)} bis zum kostenlosen Versand
+                  Noch {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal)} bis zum kostenlosen Versand
                 </div>
               )}
             </div>
