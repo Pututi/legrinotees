@@ -2,53 +2,37 @@
 import { motion } from "framer-motion"
 import { useLanguage } from "@/context/language-context"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { formatPrice } from "@/lib/currency"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/cart-context"
 import { ShoppingBag } from "lucide-react"
+import { products, colorMap, getQuickAddVariant } from "@/lib/products"
 
 export default function WomenNewArrivals() {
   const { language } = useLanguage()
   const { addItem } = useCart()
+  const router = useRouter()
 
-  const newArrivals = [
-    {
-      id: 4,
-      name: "Wildflower Warrior",
-      price: 32.99,
-      image: "/images/products/wildflower-warrior.webp",
-      colors: ["Beige"],
-    },
-    {
-      id: 6,
-      name: "Beach Please",
-      price: 29.99,
-      image: "/images/products/beach-please.webp",
-      colors: ["White"],
-    },
-    {
-      id: 11,
-      name: "Solitude is my Superpower",
-      price: 32.99,
-      image: "/images/products/solitude-superpower.webp",
-      colors: ["White"],
-    },
-    {
-      id: 14,
-      name: "Busy Do Not Disturb",
-      price: 29.99,
-      image: "/images/products/busy-do-not-disturb.webp",
-      colors: ["White"],
-    },
-  ]
+  // Los diseños más recientes (mayor id) de la categoría mujeres
+  const newArrivals = [...products]
+    .filter((p) => p.gender === "women")
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 4)
 
   const handleQuickAdd = (product) => {
+    const variant = getQuickAddVariant(product)
+    if (!variant) {
+      router.push(`/shop/${product.id}`)
+      return
+    }
     addItem({
       id: product.id,
       name: product.name,
       price: product.price,
       image: product.image,
-      size: "M", // Default size
+      size: variant.size,
+      color: variant.color,
       quantity: 1,
     })
   }
@@ -87,6 +71,7 @@ export default function WomenNewArrivals() {
                   <img
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
@@ -104,7 +89,7 @@ export default function WomenNewArrivals() {
                       <div
                         key={color}
                         className="w-4 h-4 rounded-full border border-gray-200"
-                        style={{ backgroundColor: color.toLowerCase() }}
+                        style={{ backgroundColor: colorMap[color] || color.toLowerCase() }}
                       ></div>
                     ))}
                   </div>

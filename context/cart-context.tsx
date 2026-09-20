@@ -80,10 +80,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setIsCartOpen(true)
   }
 
-  // Remove item from cart
+  // Remove item from cart. La identidad de una línea es id + size + color:
+  // comparar color con === (y no con un atajo que trate "sin color" como
+  // "cualquier color") evita afectar otras variantes del mismo producto/talla.
   const removeItem = (id: number, size: string, color?: string) => {
     setItems((prevItems) =>
-      prevItems.filter((item) => !(item.id === id && item.size === size && (color ? item.color === color : true))),
+      prevItems.filter((item) => !(item.id === id && item.size === size && item.color === color)),
     )
   }
 
@@ -93,7 +95,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     setItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id && item.size === size && (color ? item.color === color : true) ? { ...item, quantity } : item,
+        item.id === id && item.size === size && item.color === color ? { ...item, quantity } : item,
       ),
     )
   }

@@ -223,11 +223,11 @@ export default function Footer() {
           <p className="text-gray-400 text-sm mb-4 md:mb-0">
             © {new Date().getFullYear()} LEGRINO TEES. {t("footer.rights")}
           </p>
-          <div className="flex space-x-6">
+          <ul className="flex flex-wrap justify-center list-none gap-x-6 gap-y-2">
             <FooterLink href="/privacy" label={t("footer.privacy")} small />
             <FooterLink href="/terms" label={t("footer.terms")} small />
             <FooterLink href="/cookies" label={t("footer.cookies")} small />
-          </div>
+          </ul>
         </div>
       </div>
     </motion.footer>

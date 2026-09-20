@@ -2,53 +2,37 @@
 import { motion } from "framer-motion"
 import { useLanguage } from "@/context/language-context"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { formatPrice } from "@/lib/currency"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/cart-context"
 import { ShoppingBag } from "lucide-react"
+import { products, colorMap, getQuickAddVariant } from "@/lib/products"
 
 export default function MenNewArrivals() {
   const { language } = useLanguage()
   const { addItem } = useCart()
+  const router = useRouter()
 
-  const newArrivals = [
-    {
-      id: 15,
-      name: "Bold Soul",
-      price: 34.99,
-      image: "/images/products/bold-soul.webp",
-      colors: ["Beige"],
-    },
-    {
-      id: 16,
-      name: "Dream Loud",
-      price: 34.99,
-      image: "/images/products/dream-loud.webp",
-      colors: ["Beige"],
-    },
-    {
-      id: 17,
-      name: "Inner Force",
-      price: 34.99,
-      image: "/images/products/inner-force.webp",
-      colors: ["Black"],
-    },
-    {
-      id: 20,
-      name: "Rhythm",
-      price: 34.99,
-      image: "/images/products/rhythm.webp",
-      colors: ["White"],
-    },
-  ]
+  // Los diseños más recientes (mayor id) de la categoría hombres
+  const newArrivals = [...products]
+    .filter((p) => p.gender === "men")
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 4)
 
   const handleQuickAdd = (product) => {
+    const variant = getQuickAddVariant(product)
+    if (!variant) {
+      router.push(`/shop/${product.id}`)
+      return
+    }
     addItem({
       id: product.id,
       name: product.name,
       price: product.price,
       image: product.image,
-      size: "M", // Default size
+      size: variant.size,
+      color: variant.color,
       quantity: 1,
     })
   }
@@ -87,6 +71,7 @@ export default function MenNewArrivals() {
                   <img
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
@@ -104,7 +89,7 @@ export default function MenNewArrivals() {
                       <div
                         key={color}
                         className="w-4 h-4 rounded-full border border-gray-200"
-                        style={{ backgroundColor: color.toLowerCase() }}
+                        style={{ backgroundColor: colorMap[color] || color.toLowerCase() }}
                       ></div>
                     ))}
                   </div>

@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button"
 import SplitVignette from "@/components/split-vignette"
 import SplitImageAnimation from "@/components/split-image-animation"
 import { useHero } from "@/context/hero-context"
+import { products } from "@/lib/products"
+import { formatPrice } from "@/lib/currency"
 
 // Definir interfaces para los props de los componentes
 interface ParallaxSectionProps {
@@ -259,105 +261,35 @@ export default function Home() {
           </motion.h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Item 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0, ease: [0.22, 1, 0.36, 1] }}
-              className="group"
-            >
-              <Link href="/shop/16">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="/images/home/dream-loud.webp"
-                    alt="Dream Loud"
-                    className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    onError={(e) => {
-                      console.error("Error loading image")
-                      e.currentTarget.src = "/plain-cotton-tee.png"
-                    }}
-                  />
-                </div>
-                <h3 className="font-medium text-lg">Dream Loud Tee</h3>
-                <p className="text-gray-600">34,99 €</p>
-              </Link>
-            </motion.div>
-
-            {/* Item 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group"
-            >
-              <Link href="/shop/17">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="/images/home/inner-force.webp"
-                    alt="Inner Force"
-                    className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    onError={(e) => {
-                      console.error("Error loading image")
-                      e.currentTarget.src = "/plain-cotton-tee.png"
-                    }}
-                  />
-                </div>
-                <h3 className="font-medium text-lg">Inner Force Tee</h3>
-                <p className="text-gray-600">34,99 €</p>
-              </Link>
-            </motion.div>
-
-            {/* Item 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="group"
-            >
-              <Link href="/shop/18">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="/images/home/no-limits.webp"
-                    alt="No Limits"
-                    className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    onError={(e) => {
-                      console.error("Error loading image")
-                      e.currentTarget.src = "/plain-cotton-tee.png"
-                    }}
-                  />
-                </div>
-                <h3 className="font-medium text-lg">No Limits Tee</h3>
-                <p className="text-gray-600">34,99 €</p>
-              </Link>
-            </motion.div>
-
-            {/* Item 4 */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="group"
-            >
-              <Link href="/shop/19">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src="/images/home/silent-power.webp"
-                    alt="Silent Power"
-                    className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    onError={(e) => {
-                      console.error("Error loading image")
-                      e.currentTarget.src = "/plain-cotton-tee.png"
-                    }}
-                  />
-                </div>
-                <h3 className="font-medium text-lg">Silent Power Tee</h3>
-                <p className="text-gray-600">34,99 €</p>
-              </Link>
-            </motion.div>
+            {[...products]
+              .sort((a, b) => b.id - a.id)
+              .slice(0, 4)
+              .map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="group"
+                >
+                  <Link href={`/shop/${product.id}`}>
+                    <div className="overflow-hidden rounded-lg mb-4">
+                      <img
+                        src={product.image || "/placeholder.svg"}
+                        alt={product.name}
+                        className="w-full h-auto aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-700"
+                        onError={(e) => {
+                          console.error("Error loading image")
+                          e.currentTarget.src = "/plain-cotton-tee.png"
+                        }}
+                      />
+                    </div>
+                    <h3 className="font-medium text-lg">{product.name}</h3>
+                    <p className="text-gray-600">{formatPrice(product.price, language)}</p>
+                  </Link>
+                </motion.div>
+              ))}
           </div>
 
           <div className="text-center mt-12">
