@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useCart } from "@/context/cart-context"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 import { useLanguage } from "@/context/language-context"
 import { formatPrice } from "@/lib/currency"
-import { products } from "@/lib/products"
+import { products, getQuickAddVariant } from "@/lib/products"
 import MenPromoSection from "@/components/shop/men-promo-section"
 import WomenPromoSection from "@/components/shop/women-promo-section"
 import MenFeaturedCollections from "@/components/shop/men-featured-collections"
@@ -23,6 +23,7 @@ import { useHero } from "@/context/hero-context"
 
 export default function Shop() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const categoryParam = searchParams.get("category")
   const [activeCategory, setActiveCategory] = useState("all")
   const { addItem } = useCart()
@@ -32,10 +33,15 @@ export default function Shop() {
 
   // Set active category based on URL parameter
   useEffect(() => {
-    if (categoryParam) {
-      setActiveCategory(categoryParam)
-    }
+    setActiveCategory(categoryParam || "all")
   }, [categoryParam])
+
+  // Cambiar de pestaña también actualiza la URL, así recargar la página o
+  // volver con el botón atrás conserva la categoría seleccionada.
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category)
+    router.replace(category === "all" ? "/shop" : `/shop?category=${category}`, { scroll: false })
+  }
 
   // Todas las pestañas tienen banner: el header empieza transparente
   useEffect(() => {
@@ -47,12 +53,20 @@ export default function Shop() {
     activeCategory === "all" ? products : products.filter((product) => product.category === activeCategory)
 
   const handleQuickAdd = (product) => {
+    // Solo se agrega directamente si el producto tiene una única variante
+    // (talla y color). Si hay varias opciones, no adivinamos: llevamos a la ficha.
+    const variant = getQuickAddVariant(product)
+    if (!variant) {
+      router.push(`/shop/${product.id}`)
+      return
+    }
     addItem({
       id: product.id,
       name: product.name,
       price: product.price,
       image: product.image,
-      size: "M", // Default size
+      size: variant.size,
+      color: variant.color,
       quantity: 1,
     })
   }
@@ -78,16 +92,16 @@ export default function Shop() {
 
           <Tabs value={activeCategory} className="mb-12">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-4">
-              <TabsTrigger value="all" onClick={() => setActiveCategory("all")}>
+              <TabsTrigger value="all" onClick={() => handleCategoryChange("all")}>
                 {t("shop.all") || "All"}
               </TabsTrigger>
-              <TabsTrigger value="men" onClick={() => setActiveCategory("men")}>
+              <TabsTrigger value="men" onClick={() => handleCategoryChange("men")}>
                 {t("shop.men") || "Men"}
               </TabsTrigger>
-              <TabsTrigger value="women" onClick={() => setActiveCategory("women")}>
+              <TabsTrigger value="women" onClick={() => handleCategoryChange("women")}>
                 {t("shop.women") || "Women"}
               </TabsTrigger>
-              <TabsTrigger value="limited" onClick={() => setActiveCategory("limited")}>
+              <TabsTrigger value="limited" onClick={() => handleCategoryChange("limited")}>
                 {t("shop.limited") || "Limited"}
               </TabsTrigger>
             </TabsList>
@@ -170,6 +184,7 @@ function ProductCard({ product, onQuickAdd, language }) {
             <img
               src={product.image || "/placeholder.svg"}
               alt={product.name}
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </Link>

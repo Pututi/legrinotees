@@ -6,32 +6,15 @@ import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/cart-context"
 import { useLanguage } from "@/context/language-context"
 import { formatPrice } from "@/lib/currency"
+import { products } from "@/lib/products"
 import Link from "next/link"
 
 // Import AnimatePresence from framer-motion
 import { AnimatePresence } from "framer-motion"
 
-// Cambiar la línea 20 para usar URLs absolutas
-const popularProducts = [
-  {
-    id: 1,
-    name: "Pray More Worry Less",
-    price: 34.99,
-    image: "/images/products/pray-more-worry-less-flat.webp",
-  },
-  {
-    id: 15,
-    name: "Bold Soul",
-    price: 34.99,
-    image: "/images/products/bold-soul.webp",
-  },
-  {
-    id: 9,
-    name: "Read Dream Bloom",
-    price: 32.99,
-    image: "/images/products/read-dream-bloom.webp",
-  },
-]
+// Productos destacados para la compra rápida, tomados del catálogo único
+// para que las tallas y colores mostrados sean siempre los reales.
+const popularProducts = [1, 15, 9].map((id) => products.find((p) => p.id === id)).filter(Boolean)
 
 export default function QuickPurchase() {
   const { t, language } = useLanguage()
@@ -106,7 +89,10 @@ export default function QuickPurchase() {
                       className={`relative w-16 h-16 rounded-md overflow-hidden border-2 ${
                         selectedProduct.id === product.id ? "border-black" : "border-transparent"
                       }`}
-                      onClick={() => setSelectedProduct(product)}
+                      onClick={() => {
+                        setSelectedProduct(product)
+                        setSelectedSize("")
+                      }}
                     >
                       <img
                         src={product.image || "/placeholder.svg"}
@@ -145,11 +131,11 @@ export default function QuickPurchase() {
               {/* Size selection */}
               <div className="mb-4">
                 <h4 className="font-medium text-sm mb-2">{language === "de" ? "Größe wählen" : "Select Size"}</h4>
-                <div className="grid grid-cols-5 gap-1">
-                  {["XS", "S", "M", "L", "XL"].map((size) => (
+                <div className="flex flex-wrap gap-1">
+                  {selectedProduct.sizes.map((size) => (
                     <button
                       key={size}
-                      className={`py-1 border rounded-md text-sm font-medium ${
+                      className={`px-2 py-1 border rounded-md text-sm font-medium ${
                         selectedSize === size
                           ? "bg-black text-white border-black"
                           : "bg-white text-gray-900 border-gray-200 hover:border-gray-300"

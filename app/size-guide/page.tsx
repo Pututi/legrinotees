@@ -35,7 +35,7 @@ export default function SizeGuidePage() {
           </div>
 
           <Tabs defaultValue="men">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
+            <TabsList className="grid w-full grid-cols-3 mb-8">
               <TabsTrigger value="men" className="flex items-center gap-2">
                 <Shirt className="w-4 h-4" />
                 {t("sizeGuide.menSizes")}
@@ -44,20 +44,38 @@ export default function SizeGuidePage() {
                 <Shirt className="w-4 h-4" />
                 {t("sizeGuide.womenSizes")}
               </TabsTrigger>
+              <TabsTrigger value="oneSize" className="flex items-center gap-2">
+                <Shirt className="w-4 h-4" />
+                One Size
+              </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="oneSize">
+              <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                <Info className="w-6 h-6 text-gray-500 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-medium mb-2">Unsere Oversize-Modelle</h3>
+                  <p className="text-gray-600 text-sm">
+                    Einige unserer Designs gibt es nur in Einheitsgröße (One Size) — ein bewusst weiter, oversized
+                    Schnitt, der für die meisten Körpergrößen passt. Genaue Maße (Brustumfang, Länge) für diese Modelle
+                    werden noch ergänzt.
+                  </p>
+                </div>
+              </div>
+            </TabsContent>
 
             <TabsContent value="men">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Size</TableHead>
-                      <TableHead>Chest (in)</TableHead>
-                      <TableHead>Chest (cm)</TableHead>
-                      <TableHead>Waist (in)</TableHead>
-                      <TableHead>Waist (cm)</TableHead>
-                      <TableHead>Length (in)</TableHead>
-                      <TableHead>Length (cm)</TableHead>
+                      <TableHead>Größe</TableHead>
+                      <TableHead>Brust (in)</TableHead>
+                      <TableHead>Brust (cm)</TableHead>
+                      <TableHead>Taille (in)</TableHead>
+                      <TableHead>Taille (cm)</TableHead>
+                      <TableHead>Länge (in)</TableHead>
+                      <TableHead>Länge (cm)</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -125,15 +143,15 @@ export default function SizeGuidePage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Size</TableHead>
-                      <TableHead>Bust (in)</TableHead>
-                      <TableHead>Bust (cm)</TableHead>
-                      <TableHead>Waist (in)</TableHead>
-                      <TableHead>Waist (cm)</TableHead>
-                      <TableHead>Hips (in)</TableHead>
-                      <TableHead>Hips (cm)</TableHead>
-                      <TableHead>Length (in)</TableHead>
-                      <TableHead>Length (cm)</TableHead>
+                      <TableHead>Größe</TableHead>
+                      <TableHead>Brust (in)</TableHead>
+                      <TableHead>Brust (cm)</TableHead>
+                      <TableHead>Taille (in)</TableHead>
+                      <TableHead>Taille (cm)</TableHead>
+                      <TableHead>Hüfte (in)</TableHead>
+                      <TableHead>Hüfte (cm)</TableHead>
+                      <TableHead>Länge (in)</TableHead>
+                      <TableHead>Länge (cm)</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
