@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,21 +11,92 @@ import { CreditCard, CheckCircle2, ChevronRight, ShieldCheck } from "lucide-reac
 import Image from "next/image"
 import Link from "next/link"
 
+type ShippingInfo = {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  address: string
+  city: string
+  state: string
+  zip: string
+  notes: string
+}
+
+type PaymentInfo = {
+  cardName: string
+  cardNumber: string
+  expiry: string
+  cvc: string
+}
+
+const emptyShippingInfo: ShippingInfo = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  address: "",
+  city: "",
+  state: "",
+  zip: "",
+  notes: "",
+}
+
+const emptyPaymentInfo: PaymentInfo = {
+  cardName: "",
+  cardNumber: "",
+  expiry: "",
+  cvc: "",
+}
+
 export default function CheckoutPage() {
-  const { items, subtotal, clearCart } = useCart()
+  const { items, subtotal, discount, clearCart } = useCart()
   const [step, setStep] = useState(1)
   const [orderComplete, setOrderComplete] = useState(false)
+  const [shippingInfo, setShippingInfo] = useState<ShippingInfo>(emptyShippingInfo)
+  const [paymentInfo, setPaymentInfo] = useState<PaymentInfo>(emptyPaymentInfo)
+  const shippingFormRef = useRef<HTMLFormElement>(null)
+  const paymentFormRef = useRef<HTMLFormElement>(null)
 
   // Envío gratis a partir de 50€ (umbral típico para tiendas de streetwear
   // pequeñas en Alemania, y el mismo que ya se anuncia en el footer).
   // 5,99€ es el costo ya anunciado en /shipping y /faq.
+  // Nota para Gustavo: el umbral se evalúa sobre el subtotal ANTES del
+  // descuento. Si preferís que se evalúe después del descuento, avisame —
+  // no lo cambio sin confirmación (ver informe de auditoría).
   const FREE_SHIPPING_THRESHOLD = 50
   const SHIPPING_COST = 5.99
   const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST
-  const tax = subtotal * 0.08 // 8% tax — placeholder, no confirmado (ver nota para Gustavo)
-  const total = subtotal + shippingCost + tax
+  const discountedSubtotal = subtotal - discount
+  const tax = discountedSubtotal * 0.08 // 8% tax — placeholder, no confirmado (ver nota para Gustavo)
+  const total = discountedSubtotal + shippingCost + tax
 
-  const handleSubmitOrder = (e) => {
+  const updateShippingField = (field: keyof ShippingInfo) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setShippingInfo((prev) => ({ ...prev, [field]: e.target.value }))
+  }
+
+  const updatePaymentField = (field: keyof PaymentInfo) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPaymentInfo((prev) => ({ ...prev, [field]: e.target.value }))
+  }
+
+  // Avanzar de paso solo si el formulario cumple con la validación nativa
+  // del navegador (campos requeridos, formato de email, etc.). Antes los
+  // botones llamaban a setStep directamente sin validar nada.
+  const handleShippingSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (shippingFormRef.current?.reportValidity()) {
+      setStep(2)
+    }
+  }
+
+  const handlePaymentSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (paymentFormRef.current?.reportValidity()) {
+      setStep(3)
+    }
+  }
+
+  const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault()
     // Simulate order processing
     setTimeout(() => {
@@ -33,6 +104,8 @@ export default function CheckoutPage() {
       clearCart()
     }, 1500)
   }
+
+  const cardLast4 = paymentInfo.cardNumber.replace(/\s/g, "").slice(-4)
 
   // If no items in cart, redirect to cart page
   if (items.length === 0 && !orderComplete) {
@@ -142,19 +215,19 @@ export default function CheckoutPage() {
             {step === 1 && (
               <div className="p-6">
                 <h2 className="text-xl font-medium mb-6">Versandinformationen</h2>
-                <form className="space-y-4">
+                <form className="space-y-4" ref={shippingFormRef} onSubmit={handleShippingSubmit} noValidate={false}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="firstName" className="block text-sm font-medium mb-1">
                         Vorname
                       </label>
-                      <Input id="firstName" required />
+                      <Input id="firstName" required value={shippingInfo.firstName} onChange={updateShippingField("firstName")} />
                     </div>
                     <div>
                       <label htmlFor="lastName" className="block text-sm font-medium mb-1">
                         Nachname
                       </label>
-                      <Input id="lastName" required />
+                      <Input id="lastName" required value={shippingInfo.lastName} onChange={updateShippingField("lastName")} />
                     </div>
                   </div>
 
@@ -162,21 +235,21 @@ export default function CheckoutPage() {
                     <label htmlFor="email" className="block text-sm font-medium mb-1">
                       E-Mail
                     </label>
-                    <Input id="email" type="email" required />
+                    <Input id="email" type="email" required value={shippingInfo.email} onChange={updateShippingField("email")} />
                   </div>
 
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium mb-1">
                       Telefon
                     </label>
-                    <Input id="phone" type="tel" required />
+                    <Input id="phone" type="tel" required value={shippingInfo.phone} onChange={updateShippingField("phone")} />
                   </div>
 
                   <div>
                     <label htmlFor="address" className="block text-sm font-medium mb-1">
                       Adresse
                     </label>
-                    <Input id="address" required />
+                    <Input id="address" required value={shippingInfo.address} onChange={updateShippingField("address")} />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -184,19 +257,19 @@ export default function CheckoutPage() {
                       <label htmlFor="city" className="block text-sm font-medium mb-1">
                         Stadt
                       </label>
-                      <Input id="city" required />
+                      <Input id="city" required value={shippingInfo.city} onChange={updateShippingField("city")} />
                     </div>
                     <div>
                       <label htmlFor="state" className="block text-sm font-medium mb-1">
                         Bundesland
                       </label>
-                      <Input id="state" required />
+                      <Input id="state" required value={shippingInfo.state} onChange={updateShippingField("state")} />
                     </div>
                     <div>
                       <label htmlFor="zip" className="block text-sm font-medium mb-1">
                         Postleitzahl
                       </label>
-                      <Input id="zip" required />
+                      <Input id="zip" required value={shippingInfo.zip} onChange={updateShippingField("zip")} />
                     </div>
                   </div>
 
@@ -204,11 +277,11 @@ export default function CheckoutPage() {
                     <label htmlFor="notes" className="block text-sm font-medium mb-1">
                       Anmerkungen zur Bestellung (Optional)
                     </label>
-                    <Textarea id="notes" rows={3} />
+                    <Textarea id="notes" rows={3} value={shippingInfo.notes} onChange={updateShippingField("notes")} />
                   </div>
 
                   <div className="flex justify-end mt-6">
-                    <Button onClick={() => setStep(2)} className="flex items-center">
+                    <Button type="submit" className="flex items-center">
                       Weiter zur Zahlung
                       <ChevronRight className="ml-2 w-4 h-4" />
                     </Button>
@@ -221,12 +294,12 @@ export default function CheckoutPage() {
             {step === 2 && (
               <div className="p-6">
                 <h2 className="text-xl font-medium mb-6">Zahlungsinformationen</h2>
-                <form className="space-y-4">
+                <form className="space-y-4" ref={paymentFormRef} onSubmit={handlePaymentSubmit}>
                   <div>
                     <label htmlFor="cardName" className="block text-sm font-medium mb-1">
                       Name auf der Karte
                     </label>
-                    <Input id="cardName" required />
+                    <Input id="cardName" required value={paymentInfo.cardName} onChange={updatePaymentField("cardName")} />
                   </div>
 
                   <div>
@@ -234,7 +307,13 @@ export default function CheckoutPage() {
                       Kartennummer
                     </label>
                     <div className="relative">
-                      <Input id="cardNumber" placeholder="1234 5678 9012 3456" required />
+                      <Input
+                        id="cardNumber"
+                        placeholder="1234 5678 9012 3456"
+                        required
+                        value={paymentInfo.cardNumber}
+                        onChange={updatePaymentField("cardNumber")}
+                      />
                       <CreditCard className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     </div>
                   </div>
@@ -244,13 +323,13 @@ export default function CheckoutPage() {
                       <label htmlFor="expiry" className="block text-sm font-medium mb-1">
                         Ablaufdatum
                       </label>
-                      <Input id="expiry" placeholder="MM/JJ" required />
+                      <Input id="expiry" placeholder="MM/JJ" required value={paymentInfo.expiry} onChange={updatePaymentField("expiry")} />
                     </div>
                     <div>
                       <label htmlFor="cvc" className="block text-sm font-medium mb-1">
                         CVC
                       </label>
-                      <Input id="cvc" placeholder="123" required />
+                      <Input id="cvc" placeholder="123" required value={paymentInfo.cvc} onChange={updatePaymentField("cvc")} />
                     </div>
                   </div>
 
@@ -260,10 +339,10 @@ export default function CheckoutPage() {
                   </div>
 
                   <div className="flex justify-between mt-6">
-                    <Button variant="outline" onClick={() => setStep(1)}>
+                    <Button variant="outline" type="button" onClick={() => setStep(1)}>
                       Zurück
                     </Button>
-                    <Button onClick={() => setStep(3)} className="flex items-center">
+                    <Button type="submit" className="flex items-center">
                       Bestellung überprüfen
                       <ChevronRight className="ml-2 w-4 h-4" />
                     </Button>
@@ -292,7 +371,10 @@ export default function CheckoutPage() {
                         </div>
                         <div className="flex-1">
                           <h4 className="font-medium">{item.name}</h4>
-                          <p className="text-sm text-gray-500">Größe: {item.size}</p>
+                          <p className="text-sm text-gray-500">
+                            Größe: {item.size}
+                            {item.color ? ` · Farbe: ${item.color}` : ""}
+                          </p>
                           <div className="flex justify-between mt-1">
                             <span className="text-sm">Menge: {item.quantity}</span>
                             <span>{formatPrice(item.price * item.quantity)}</span>
@@ -306,11 +388,12 @@ export default function CheckoutPage() {
                 <div className="border-t pt-4 mb-6">
                   <h3 className="font-medium mb-3">Lieferadresse</h3>
                   <p className="text-gray-600">
-                    Max Mustermann
+                    {shippingInfo.firstName} {shippingInfo.lastName}
                     <br />
-                    Musterstraße 1
+                    {shippingInfo.address}
                     <br />
-                    10115 Berlin
+                    {shippingInfo.zip} {shippingInfo.city}
+                    {shippingInfo.state ? `, ${shippingInfo.state}` : ""}
                     <br />
                     Deutschland
                   </p>
@@ -320,7 +403,7 @@ export default function CheckoutPage() {
                   <h3 className="font-medium mb-3">Zahlungsmethode</h3>
                   <div className="flex items-center">
                     <CreditCard className="w-5 h-5 mr-2 text-gray-600" />
-                    <span>Kreditkarte endet auf 3456</span>
+                    <span>{cardLast4 ? `Kreditkarte endet auf ${cardLast4}` : "Kreditkarte"}</span>
                   </div>
                 </div>
 
@@ -356,6 +439,13 @@ export default function CheckoutPage() {
                 <span className="text-gray-600">Zwischensumme</span>
                 <span>{formatPrice(subtotal)}</span>
               </div>
+
+              {discount > 0 && (
+                <div className="flex justify-between text-green-600">
+                  <span>Rabatt</span>
+                  <span>-{formatPrice(discount)}</span>
+                </div>
+              )}
 
               <div className="flex justify-between">
                 <span className="text-gray-600">Versand</span>

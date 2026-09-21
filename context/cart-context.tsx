@@ -12,6 +12,12 @@ export type CartItem = {
   color?: string
 }
 
+// Códigos de promoción válidos. Por ahora solo WELCOME10 (10% de descuento),
+// que es el único que se anunciaba en el carrito.
+const PROMO_CODES: Record<string, number> = {
+  welcome10: 0.1,
+}
+
 type CartContextType = {
   items: CartItem[]
   addItem: (item: Omit<CartItem, "quantity"> & { quantity?: number }) => void
@@ -22,6 +28,11 @@ type CartContextType = {
   setIsCartOpen: (isOpen: boolean) => void
   totalItems: number
   subtotal: number
+  promoCode: string | null
+  discountPercent: number
+  discount: number
+  applyPromoCode: (code: string) => boolean
+  removePromoCode: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -30,10 +41,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [promoCode, setPromoCode] = useState<string | null>(null)
+  const [discountPercent, setDiscountPercent] = useState(0)
 
   // Calculate total items and subtotal
   const totalItems = items.reduce((total, item) => total + item.quantity, 0)
   const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0)
+  // El descuento se recalcula siempre sobre el subtotal actual, nunca se
+  // guarda como un monto fijo: así cambiar cantidades o quitar artículos
+  // no deja un descuento "fantasma" calculado sobre un carrito anterior.
+  const discount = subtotal * discountPercent
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -46,6 +63,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
         console.error("Failed to parse cart from localStorage")
       }
     }
+    const savedPromo = localStorage.getItem("promo")
+    if (savedPromo) {
+      try {
+        const parsed = JSON.parse(savedPromo)
+        if (parsed.code && typeof parsed.percent === "number") {
+          setPromoCode(parsed.code)
+          setDiscountPercent(parsed.percent)
+        }
+      } catch (e) {
+        console.error("Failed to parse promo from localStorage")
+      }
+    }
   }, [])
 
   // Save cart to localStorage when it changes
@@ -54,6 +83,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("cart", JSON.stringify(items))
     }
   }, [items, mounted])
+
+  // Save promo code to localStorage when it changes. Se guarda junto al
+  // carrito para que sobreviva a recargar la página o volver del checkout.
+  useEffect(() => {
+    if (!mounted) return
+    if (promoCode) {
+      localStorage.setItem("promo", JSON.stringify({ code: promoCode, percent: discountPercent }))
+    } else {
+      localStorage.removeItem("promo")
+    }
+  }, [promoCode, discountPercent, mounted])
 
   // Add item to cart
   const addItem = (newItem: Omit<CartItem, "quantity"> & { quantity?: number }) => {
@@ -103,6 +143,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Clear cart
   const clearCart = () => {
     setItems([])
+    setPromoCode(null)
+    setDiscountPercent(0)
+  }
+
+  // Aplicar un código de promoción. Devuelve true/false para que la
+  // pantalla que lo llama pueda mostrar el mensaje correspondiente.
+  const applyPromoCode = (code: string) => {
+    const normalized = code.trim().toLowerCase()
+    const percent = PROMO_CODES[normalized]
+    if (percent) {
+      setPromoCode(normalized)
+      setDiscountPercent(percent)
+      return true
+    }
+    return false
+  }
+
+  const removePromoCode = () => {
+    setPromoCode(null)
+    setDiscountPercent(0)
   }
 
   return (
@@ -117,6 +177,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setIsCartOpen,
         totalItems,
         subtotal,
+        promoCode,
+        discountPercent,
+        discount,
+        applyPromoCode,
+        removePromoCode,
       }}
     >
       {children}
