@@ -11,22 +11,15 @@ import Image from "next/image"
 import Link from "next/link"
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, subtotal, totalItems } = useCart()
-  const [promoCode, setPromoCode] = useState("")
-  const [promoApplied, setPromoApplied] = useState(false)
-  const [discount, setDiscount] = useState(0)
+  const { items, removeItem, updateQuantity, subtotal, totalItems, promoCode, discount, applyPromoCode } = useCart()
+  const [promoInput, setPromoInput] = useState("")
+  const [promoError, setPromoError] = useState(false)
   const { t, language } = useLanguage()
 
   // Handle promo code application
-  const applyPromoCode = () => {
-    if (promoCode.toLowerCase() === "welcome10") {
-      setDiscount(subtotal * 0.1)
-      setPromoApplied(true)
-    } else {
-      setDiscount(0)
-      setPromoApplied(false)
-      alert("Invalid promo code")
-    }
+  const handleApplyPromoCode = () => {
+    const success = applyPromoCode(promoInput)
+    setPromoError(!success)
   }
 
   // Calculate final total
@@ -168,19 +161,23 @@ export default function CartPage() {
                       type="text"
                       placeholder={t("cart.promoCode")}
                       className="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black"
-                      value={promoCode}
-                      onChange={(e) => setPromoCode(e.target.value)}
-                      disabled={promoApplied}
+                      value={promoInput}
+                      onChange={(e) => {
+                        setPromoInput(e.target.value)
+                        setPromoError(false)
+                      }}
+                      disabled={!!promoCode}
                     />
-                    <Button onClick={applyPromoCode} variant="outline" disabled={promoApplied || !promoCode}>
+                    <Button onClick={handleApplyPromoCode} variant="outline" disabled={!!promoCode || !promoInput}>
                       {t("cart.apply")}
                     </Button>
                   </div>
-                  {promoApplied && <div className="text-sm text-green-600">{t("cart.promoApplied")}</div>}
+                  {promoCode && <div className="text-sm text-green-600">{t("cart.promoApplied")}</div>}
+                  {promoError && <div className="text-sm text-red-500">Ungültiger Gutscheincode</div>}
                   <div className="text-xs text-gray-500 mt-1">{t("cart.promoTry")}</div>
                 </div>
 
-                {promoApplied && (
+                {promoCode && (
                   <div className="flex justify-between text-green-600">
                     <span>{t("cart.discount")}</span>
                     <span>-{formatPrice(discount, language)}</span>
