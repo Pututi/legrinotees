@@ -11,6 +11,7 @@ import { UserProvider } from "@/context/user-context"
 import { LanguageProvider } from "@/context/language-context"
 import { CookieConsentProvider } from "@/context/cookie-consent-context"
 import { HeroProvider, useHero } from "@/context/hero-context"
+import { CursorProvider } from "@/context/cursor-context"
 import CartSidebar from "@/components/cart/cart-sidebar"
 import CookieConsentBanner from "@/components/cookie-consent-banner"
 import QuickPurchase from "@/components/quick-purchase"
@@ -62,7 +63,9 @@ export default function RootClient({
               <CartProvider>
                 <CookieConsentProvider>
                   <HeroProvider>
-                    <LayoutBody>{children}</LayoutBody>
+                    <CursorProvider>
+                      <LayoutBody>{children}</LayoutBody>
+                    </CursorProvider>
                   </HeroProvider>
                 </CookieConsentProvider>
               </CartProvider>
