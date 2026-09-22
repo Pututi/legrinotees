@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import SplitVignette from "@/components/split-vignette"
 import SplitImageAnimation from "@/components/split-image-animation"
+import TornHeroImage from "@/components/torn-hero-image"
 import { useHero } from "@/context/hero-context"
 import { products } from "@/lib/products"
 import { formatPrice } from "@/lib/currency"
@@ -48,9 +49,6 @@ export default function Home() {
   const scale = useTransform(scrollInfo.scrollYProgress, [0, 1], [1, 1.2])
   const opacity = useTransform(scrollInfo.scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.6])
 
-  // Estado para controlar si la imagen de Cloudinary falló
-  const [cloudinaryFailed, setCloudinaryFailed] = useState(false)
-
   // Sitio en alemán únicamente
   const t = (key: string): string => {
     const translations: Record<string, string> = {
@@ -92,20 +90,12 @@ export default function Home() {
       {/* Hero section with parallax background */}
       <div ref={ref} className="relative h-screen overflow-hidden">
         <motion.div className="absolute inset-0 w-full h-full" style={{ scale, opacity }}>
-          {/* Usar la imagen de Cloudinary que funciona */}
-          <img
-            src={cloudinaryHeroUrl || "/placeholder.svg"}
-            alt="LEGRINO TEES"
-            className="w-full h-full object-cover"
-            onError={() => {
-              console.error("Error loading Cloudinary image")
-              setCloudinaryFailed(true)
-            }}
-          />
+          <TornHeroImage src={cloudinaryHeroUrl} alt="LEGRINO TEES" />
         </motion.div>
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Degradado suave arriba, solo para que el header transparente siga siendo legible */}
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black/45 to-transparent pointer-events-none" />
         <div className="absolute inset-0 flex items-center justify-center text-center">
-          <div className="max-w-3xl px-6">
+          <div className="max-w-3xl px-6 py-10 sm:px-10 sm:py-12 rounded-3xl bg-black/35 backdrop-blur-[2px]">
             {/* Actualizar el título y descripción del hero */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
