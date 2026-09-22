@@ -20,6 +20,7 @@ import WomenNewArrivals from "@/components/shop/women-new-arrivals"
 import LimitedPromoSection from "@/components/shop/limited-promo-section"
 import AllPromoSection from "@/components/shop/all-promo-section"
 import { useHero } from "@/context/hero-context"
+import { useCursor } from "@/context/cursor-context"
 
 export default function Shop() {
   const searchParams = useSearchParams()
@@ -168,6 +169,7 @@ export default function Shop() {
 function ProductCard({ product, onQuickAdd, language }) {
   const [isHovered, setIsHovered] = useState(false)
   const { t } = useLanguage()
+  const { showCursor, hideCursor } = useCursor()
 
   return (
     <motion.div
@@ -175,12 +177,18 @@ function ProductCard({ product, onQuickAdd, language }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => {
+        setIsHovered(true)
+        showCursor("Ansehen")
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false)
+        hideCursor()
+      }}
     >
       <Card className="overflow-hidden border-0 shadow-sm">
         <div className="relative aspect-[3/4] overflow-hidden">
-          <Link href={`/shop/${product.id}`}>
+          <Link href={`/shop/${product.id}`} className="md:cursor-none">
             <img
               src={product.image || "/placeholder.svg"}
               alt={product.name}

@@ -11,6 +11,7 @@ import { useLanguage } from "@/context/language-context"
 import { Star, Heart, Share2, Truck, RefreshCw, ZoomIn, X } from "lucide-react"
 import { formatPrice } from "@/lib/currency"
 import { products, colorMap } from "@/lib/products"
+import { useCursor } from "@/context/cursor-context"
 
 // Define product interface
 interface Product {
@@ -35,6 +36,7 @@ export default function ProductPage() {
   const router = useRouter()
   const { addItem } = useCart()
   const { t, language } = useLanguage()
+  const { showCursor, hideCursor } = useCursor()
 
   const [product, setProduct] = useState(null)
   const [selectedImage, setSelectedImage] = useState(0)
@@ -369,7 +371,13 @@ export default function ProductPage() {
           <h2 className="text-lg font-normal mb-8">{t("product.youMayAlsoLike")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {relatedProducts.map((relatedProduct) => (
-              <Link key={relatedProduct.id} href={`/shop/${relatedProduct.id}`}>
+              <Link
+                key={relatedProduct.id}
+                href={`/shop/${relatedProduct.id}`}
+                className="md:cursor-none"
+                onMouseEnter={() => showCursor("Ansehen")}
+                onMouseLeave={hideCursor}
+              >
                 <div className="group">
                   <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 mb-3">
                     <img

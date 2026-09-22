@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/cart-context"
 import { ShoppingBag } from "lucide-react"
 import { products, colorMap, getQuickAddVariant } from "@/lib/products"
+import { useCursor } from "@/context/cursor-context"
 
 export default function WomenNewArrivals() {
   const { language } = useLanguage()
   const { addItem } = useCart()
   const router = useRouter()
+  const { showCursor, hideCursor } = useCursor()
 
   // Los diseños más recientes (mayor id) de la categoría mujeres
   const newArrivals = [...products]
@@ -66,7 +68,12 @@ export default function WomenNewArrivals() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Link href={`/shop/${product.id}`}>
+              <Link
+                href={`/shop/${product.id}`}
+                className="md:cursor-none"
+                onMouseEnter={() => showCursor("Ansehen")}
+                onMouseLeave={hideCursor}
+              >
                 <div className="aspect-[3/4] overflow-hidden">
                   <img
                     src={product.image || "/placeholder.svg"}
