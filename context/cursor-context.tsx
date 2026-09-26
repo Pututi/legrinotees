@@ -39,6 +39,26 @@ export function CursorProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("mousemove", handleMove)
   }, [isFinePointer])
 
+  // El navegador no dispara "mouseleave" del producto solo porque la
+  // página se desplaza debajo de un mouse que no se movió (scroll con
+  // la rueda, o un scroll disparado por código): eso dejaba el círculo
+  // "Ansehen" pegado en pantalla después de salir de la sección de
+  // productos. Ocultarlo apenas hay scroll, o si el mouse sale de la
+  // ventana del todo, lo resuelve sin tener que rastrear cada elemento.
+  useEffect(() => {
+    if (!isFinePointer) return
+    const handleScroll = () => setVisible(false)
+    const handleWindowLeave = (e: MouseEvent) => {
+      if (!e.relatedTarget) setVisible(false)
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true, capture: true })
+    document.addEventListener("mouseout", handleWindowLeave)
+    return () => {
+      window.removeEventListener("scroll", handleScroll, { capture: true } as EventListenerOptions)
+      document.removeEventListener("mouseout", handleWindowLeave)
+    }
+  }, [isFinePointer])
+
   const showCursor = (text = "Ansehen") => {
     setLabel(text)
     setVisible(true)
