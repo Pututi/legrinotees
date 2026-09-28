@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, type MouseEvent } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
@@ -46,12 +46,36 @@ export default function ProductPage() {
   const [relatedProducts, setRelatedProducts] = useState([])
   const [productImages, setProductImages] = useState([])
   const [isZoomed, setIsZoomed] = useState(false)
+  // 1 = tamaño normal de la vista ampliada, 2 = acercado sobre el punto clickeado
+  const [zoomLevel, setZoomLevel] = useState(1)
+  const [zoomOrigin, setZoomOrigin] = useState({ x: 50, y: 50 })
+
+  const closeZoom = () => {
+    setIsZoomed(false)
+    setZoomLevel(1)
+  }
+
+  // Un clic sobre la imagen ya ampliada la acerca todavía más, enfocada en
+  // el punto exacto donde se hizo clic. Un segundo clic vuelve al tamaño
+  // normal de la vista ampliada, sin cerrarla.
+  const handleLightboxImageClick = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+    if (zoomLevel > 1) {
+      setZoomLevel(1)
+      return
+    }
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width) * 100
+    const y = ((e.clientY - rect.top) / rect.height) * 100
+    setZoomOrigin({ x, y })
+    setZoomLevel(2)
+  }
 
   // Cerrar la vista ampliada con la tecla Escape
   useEffect(() => {
     if (!isZoomed) return
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsZoomed(false)
+      if (e.key === "Escape") closeZoom()
     }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
@@ -405,29 +429,40 @@ export default function ProductPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onClick={() => setIsZoomed(false)}
+            onClick={closeZoom}
           >
             <button
               type="button"
               className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-              onClick={() => setIsZoomed(false)}
+              onClick={closeZoom}
               aria-label="Schließen"
             >
               <X className="w-5 h-5" />
             </button>
+            {zoomLevel === 1 && (
+              <span className="absolute bottom-4 left-1/2 -translate-x-1/2 sm:bottom-6 text-xs text-white/70 tracking-wide pointer-events-none">
+                Zum Vergrößern klicken
+              </span>
+            )}
             <motion.div
-              className="relative w-full max-w-lg h-full max-h-[90vh] overflow-hidden"
+              className={`relative w-full max-w-lg h-full max-h-[90vh] overflow-hidden ${
+                zoomLevel > 1 ? "cursor-zoom-out" : "cursor-zoom-in"
+              }`}
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={handleLightboxImageClick}
             >
               <img
                 src={productImages[selectedImage] || "/placeholder.svg"}
                 alt={product.name}
-                className="w-full h-full object-cover"
-                style={{ objectPosition: "50% 32%" }}
+                className="w-full h-full object-cover transition-transform duration-300 ease-out"
+                style={{
+                  objectPosition: "50% 32%",
+                  transform: zoomLevel > 1 ? "scale(2.2)" : "scale(1)",
+                  transformOrigin: `${zoomOrigin.x}% ${zoomOrigin.y}%`,
+                }}
               />
             </motion.div>
           </motion.div>
