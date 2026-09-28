@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { getDiscountPercent } from "@/lib/promo-codes"
 
 export type CartItem = {
   id: number
@@ -10,12 +11,6 @@ export type CartItem = {
   quantity: number
   size: string
   color?: string
-}
-
-// Códigos de promoción válidos. Por ahora solo WELCOME10 (10% de descuento),
-// que es el único que se anunciaba en el carrito.
-const PROMO_CODES: Record<string, number> = {
-  welcome10: 0.1,
 }
 
 type CartContextType = {
@@ -151,7 +146,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // pantalla que lo llama pueda mostrar el mensaje correspondiente.
   const applyPromoCode = (code: string) => {
     const normalized = code.trim().toLowerCase()
-    const percent = PROMO_CODES[normalized]
+    const percent = getDiscountPercent(normalized)
     if (percent) {
       setPromoCode(normalized)
       setDiscountPercent(percent)

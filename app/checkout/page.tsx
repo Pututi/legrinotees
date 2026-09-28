@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useCart } from "@/context/cart-context"
 import { formatPrice } from "@/lib/currency"
-import { CreditCard, CheckCircle2, ChevronRight, ShieldCheck } from "lucide-react"
+import { ChevronRight, Lock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -23,13 +23,6 @@ type ShippingInfo = {
   notes: string
 }
 
-type PaymentInfo = {
-  cardName: string
-  cardNumber: string
-  expiry: string
-  cvc: string
-}
-
 const emptyShippingInfo: ShippingInfo = {
   firstName: "",
   lastName: "",
@@ -42,21 +35,13 @@ const emptyShippingInfo: ShippingInfo = {
   notes: "",
 }
 
-const emptyPaymentInfo: PaymentInfo = {
-  cardName: "",
-  cardNumber: "",
-  expiry: "",
-  cvc: "",
-}
-
 export default function CheckoutPage() {
-  const { items, subtotal, discount, clearCart } = useCart()
+  const { items, subtotal, discount, promoCode } = useCart()
   const [step, setStep] = useState(1)
-  const [orderComplete, setOrderComplete] = useState(false)
   const [shippingInfo, setShippingInfo] = useState<ShippingInfo>(emptyShippingInfo)
-  const [paymentInfo, setPaymentInfo] = useState<PaymentInfo>(emptyPaymentInfo)
+  const [isRedirecting, setIsRedirecting] = useState(false)
+  const [payError, setPayError] = useState("")
   const shippingFormRef = useRef<HTMLFormElement>(null)
-  const paymentFormRef = useRef<HTMLFormElement>(null)
 
   // Envío gratis a partir de 50€ (umbral típico para tiendas de streetwear
   // pequeñas en Alemania, y el mismo que ya se anuncia en el footer).
@@ -68,20 +53,19 @@ export default function CheckoutPage() {
   const SHIPPING_COST = 5.99
   const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST
   const discountedSubtotal = subtotal - discount
-  const tax = discountedSubtotal * 0.08 // 8% tax — placeholder, no confirmado (ver nota para Gustavo)
-  const total = discountedSubtotal + shippingCost + tax
+  // Sin impuesto agregado en el checkout: los precios del catálogo se tratan
+  // como precio final (práctica habitual B2C en Alemania). En cuanto Gustavo
+  // confirme régimen fiscal (19% estándar vs. pequeño empresario §19 UStG),
+  // se ajusta cómo se muestra — no se inventa una tasa mientras tanto.
+  const total = discountedSubtotal + shippingCost
 
-  const updateShippingField = (field: keyof ShippingInfo) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setShippingInfo((prev) => ({ ...prev, [field]: e.target.value }))
-  }
-
-  const updatePaymentField = (field: keyof PaymentInfo) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPaymentInfo((prev) => ({ ...prev, [field]: e.target.value }))
-  }
+  const updateShippingField =
+    (field: keyof ShippingInfo) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setShippingInfo((prev) => ({ ...prev, [field]: e.target.value }))
+    }
 
   // Avanzar de paso solo si el formulario cumple con la validación nativa
-  // del navegador (campos requeridos, formato de email, etc.). Antes los
-  // botones llamaban a setStep directamente sin validar nada.
+  // del navegador (campos requeridos, formato de email, etc.).
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (shippingFormRef.current?.reportValidity()) {
@@ -89,26 +73,37 @@ export default function CheckoutPage() {
     }
   }
 
-  const handlePaymentSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (paymentFormRef.current?.reportValidity()) {
-      setStep(3)
+  // Crea una sesión de pago real en Stripe (el servidor recalcula todo
+  // desde el catálogo) y redirige a la página segura de Stripe para pagar
+  // con tarjeta, PayPal, etc. Nada se confirma ni se vacía el carrito acá:
+  // eso pasa recién en /checkout/success, después de que Stripe confirme
+  // el pago de verdad.
+  const handlePayNow = async () => {
+    setIsRedirecting(true)
+    setPayError("")
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({ id: item.id, size: item.size, color: item.color, quantity: item.quantity })),
+          promoCode,
+          shippingInfo,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "Zahlung konnte nicht gestartet werden.")
+      }
+      window.location.href = data.url
+    } catch (err) {
+      setPayError(err instanceof Error ? err.message : "Zahlung konnte nicht gestartet werden.")
+      setIsRedirecting(false)
     }
   }
 
-  const handleSubmitOrder = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Simulate order processing
-    setTimeout(() => {
-      setOrderComplete(true)
-      clearCart()
-    }, 1500)
-  }
-
-  const cardLast4 = paymentInfo.cardNumber.replace(/\s/g, "").slice(-4)
-
   // If no items in cart, redirect to cart page
-  if (items.length === 0 && !orderComplete) {
+  if (items.length === 0) {
     return (
       <div className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <h1 className="text-3xl font-bold mb-6">Dein Warenkorb ist leer</h1>
@@ -117,49 +112,6 @@ export default function CheckoutPage() {
           <Button>Weiter einkaufen</Button>
         </Link>
       </div>
-    )
-  }
-
-  // Order complete screen
-  if (orderComplete) {
-    return (
-      <motion.div
-        className="py-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="bg-white p-8 rounded-lg shadow-sm">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
-          >
-            <CheckCircle2 className="w-10 h-10 text-green-600" />
-          </motion.div>
-
-          <h1 className="text-3xl font-bold mb-4">Bestellung bestätigt!</h1>
-          <p className="text-gray-600 mb-8">
-            Vielen Dank für deinen Einkauf. Wir haben deine Bestellung erhalten und bearbeiten sie umgehend. Du
-            erhältst in Kürze eine Bestätigungs-E-Mail.
-          </p>
-
-          <div className="mb-8 p-4 bg-gray-50 rounded-lg">
-            <h2 className="font-medium mb-2">Bestellung #LEGRINO-{Math.floor(Math.random() * 10000)}</h2>
-            <p className="text-sm text-gray-500">Voraussichtliche Lieferung: 3-5 Werktage</p>
-          </div>
-
-          <div className="flex justify-center space-x-4">
-            <Link href="/">
-              <Button variant="outline">Zur Startseite</Button>
-            </Link>
-            <Link href="/shop">
-              <Button>Weiter einkaufen</Button>
-            </Link>
-          </div>
-        </div>
-      </motion.div>
     )
   }
 
@@ -188,17 +140,10 @@ export default function CheckoutPage() {
           >
             2
           </div>
-          <div className={`flex-1 h-1 mx-2 ${step >= 3 ? "bg-black" : "bg-gray-200"}`}></div>
-          <div
-            className={`flex items-center justify-center w-8 h-8 rounded-full ${step >= 3 ? "bg-black text-white" : "bg-gray-200"}`}
-          >
-            3
-          </div>
         </div>
         <div className="flex justify-between mt-2 text-sm">
           <span>Versand</span>
-          <span>Zahlung</span>
-          <span>Überprüfung</span>
+          <span>Überprüfung &amp; Zahlung</span>
         </div>
       </div>
 
@@ -215,7 +160,7 @@ export default function CheckoutPage() {
             {step === 1 && (
               <div className="p-6">
                 <h2 className="text-xl font-medium mb-6">Versandinformationen</h2>
-                <form className="space-y-4" ref={shippingFormRef} onSubmit={handleShippingSubmit} noValidate={false}>
+                <form className="space-y-4" ref={shippingFormRef} onSubmit={handleShippingSubmit}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="firstName" className="block text-sm font-medium mb-1">
@@ -282,7 +227,7 @@ export default function CheckoutPage() {
 
                   <div className="flex justify-end mt-6">
                     <Button type="submit" className="flex items-center">
-                      Weiter zur Zahlung
+                      Weiter zur Überprüfung
                       <ChevronRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
@@ -290,69 +235,8 @@ export default function CheckoutPage() {
               </div>
             )}
 
-            {/* Step 2: Payment Information */}
+            {/* Step 2: Review + real payment */}
             {step === 2 && (
-              <div className="p-6">
-                <h2 className="text-xl font-medium mb-6">Zahlungsinformationen</h2>
-                <form className="space-y-4" ref={paymentFormRef} onSubmit={handlePaymentSubmit}>
-                  <div>
-                    <label htmlFor="cardName" className="block text-sm font-medium mb-1">
-                      Name auf der Karte
-                    </label>
-                    <Input id="cardName" required value={paymentInfo.cardName} onChange={updatePaymentField("cardName")} />
-                  </div>
-
-                  <div>
-                    <label htmlFor="cardNumber" className="block text-sm font-medium mb-1">
-                      Kartennummer
-                    </label>
-                    <div className="relative">
-                      <Input
-                        id="cardNumber"
-                        placeholder="1234 5678 9012 3456"
-                        required
-                        value={paymentInfo.cardNumber}
-                        onChange={updatePaymentField("cardNumber")}
-                      />
-                      <CreditCard className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="expiry" className="block text-sm font-medium mb-1">
-                        Ablaufdatum
-                      </label>
-                      <Input id="expiry" placeholder="MM/JJ" required value={paymentInfo.expiry} onChange={updatePaymentField("expiry")} />
-                    </div>
-                    <div>
-                      <label htmlFor="cvc" className="block text-sm font-medium mb-1">
-                        CVC
-                      </label>
-                      <Input id="cvc" placeholder="123" required value={paymentInfo.cvc} onChange={updatePaymentField("cvc")} />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center mt-4">
-                    <ShieldCheck className="w-5 h-5 text-gray-500 mr-2" />
-                    <span className="text-sm text-gray-500">Deine Zahlungsinformationen sind sicher und verschlüsselt</span>
-                  </div>
-
-                  <div className="flex justify-between mt-6">
-                    <Button variant="outline" type="button" onClick={() => setStep(1)}>
-                      Zurück
-                    </Button>
-                    <Button type="submit" className="flex items-center">
-                      Bestellung überprüfen
-                      <ChevronRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </div>
-                </form>
-              </div>
-            )}
-
-            {/* Step 3: Review Order */}
-            {step === 3 && (
               <div className="p-6">
                 <h2 className="text-xl font-medium mb-6">Überprüfe deine Bestellung</h2>
 
@@ -400,24 +284,30 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="border-t pt-4 mb-6">
-                  <h3 className="font-medium mb-3">Zahlungsmethode</h3>
-                  <div className="flex items-center">
-                    <CreditCard className="w-5 h-5 mr-2 text-gray-600" />
-                    <span>{cardLast4 ? `Kreditkarte endet auf ${cardLast4}` : "Kreditkarte"}</span>
-                  </div>
+                  <h3 className="font-medium mb-3">Zahlung</h3>
+                  <p className="text-sm text-gray-600">
+                    Du zahlst sicher über Stripe — mit Kreditkarte, PayPal und weiteren Methoden. Die Zahlungsdaten
+                    gibst du erst auf der nächsten, gesicherten Seite ein.
+                  </p>
                 </div>
 
-                <form onSubmit={handleSubmitOrder}>
-                  <div className="flex justify-between mt-6">
-                    <Button variant="outline" onClick={() => setStep(2)} type="button">
-                      Zurück
-                    </Button>
-                    <Button type="submit" className="flex items-center">
-                      Bestellung aufgeben
-                      <ChevronRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </div>
-                </form>
+                {payError && <p className="text-sm text-red-500 mb-4">{payError}</p>}
+
+                <div className="flex justify-between mt-6">
+                  <Button variant="outline" type="button" onClick={() => setStep(1)} disabled={isRedirecting}>
+                    Zurück
+                  </Button>
+                  <Button type="button" className="flex items-center" onClick={handlePayNow} disabled={isRedirecting}>
+                    {isRedirecting ? (
+                      "Weiterleiten…"
+                    ) : (
+                      <>
+                        <Lock className="mr-2 w-4 h-4" />
+                        Sicher bezahlen mit Stripe
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             )}
           </div>
@@ -454,15 +344,11 @@ export default function CheckoutPage() {
                 </span>
               </div>
 
-              <div className="flex justify-between">
-                <span className="text-gray-600">MwSt.</span>
-                <span>{formatPrice(tax)}</span>
-              </div>
-
               <div className="flex justify-between pt-4 border-t font-medium text-lg">
                 <span>Gesamt</span>
                 <span>{formatPrice(total)}</span>
               </div>
+              <p className="text-xs text-gray-400">inkl. MwSt., sofern anwendbar</p>
 
               {shippingCost === 0 && (
                 <div className="text-sm text-green-600 mt-2">Du hast dir kostenlosen Versand gesichert!</div>
